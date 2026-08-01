@@ -1,0 +1,188 @@
+@import "tailwindcss";
+
+@theme {
+  /* ---- Brand colors ---- */
+  --color-ink: #181515; /* ダークブラックブラウン */
+  --color-espresso: #433d3d; /* チャコールブラウン */
+  --color-gold: #c9c28c; /* くすみゴールド */
+  --color-gold-deep: #a2996a; /* ゴールド（濃・装飾用） */
+  --color-olive: #8d876d; /* オリーブグレー */
+  --color-olive-deep: #625c48; /* オリーブ（濃・小さな文字用 AA確保） */
+  --color-ivory: #f3f0e6; /* ウォームアイボリー */
+  --color-ivory-soft: #ebe7d8; /* アイボリー（やや濃） */
+  --color-paper: #f8f6ef; /* 紙のような明るい面 */
+
+  /* ---- Fonts ---- */
+  --font-mincho: var(--font-shippori), "Hiragino Mincho ProN", "Yu Mincho",
+    "Noto Serif JP", serif;
+  --font-gothic: var(--font-zen-kaku), "Hiragino Kaku Gothic ProN", "Yu Gothic",
+    "Noto Sans JP", sans-serif;
+  --font-serif-en: var(--font-garamond), "Times New Roman", Georgia, serif;
+
+  /* ---- Easing ---- */
+  --ease-quiet: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* ================================================================
+   Base
+================================================================ */
+
+html {
+  scroll-padding-top: 6rem;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+body {
+  background-color: var(--color-ivory);
+  color: var(--color-ink);
+  font-family: var(--font-gothic);
+  font-feature-settings: "palt";
+  letter-spacing: 0.03em;
+  line-height: 1.9;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background-color: color-mix(in srgb, var(--color-gold) 45%, transparent);
+  color: var(--color-ink);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-olive-deep);
+  outline-offset: 3px;
+}
+
+/* ================================================================
+   Texture — 紙・布のような質感（微細なノイズ）
+================================================================ */
+
+.grain {
+  position: relative;
+}
+
+.grain::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 240 240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeComponentTransfer%3E%3CfeFuncA type='linear' slope='0.055'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='240' height='240' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 240px 240px;
+}
+
+.grain > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* ================================================================
+   Reveal — スクロールに合わせた控えめな出現
+================================================================ */
+
+.reveal {
+  opacity: 0;
+  transform: translateY(1.4rem);
+  transition:
+    opacity 1s var(--ease-quiet),
+    transform 1s var(--ease-quiet);
+  transition-delay: var(--reveal-delay, 0s);
+  will-change: opacity, transform;
+}
+
+.reveal.is-inview {
+  opacity: 1;
+  transform: none;
+}
+
+.reveal-line {
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 1.4s var(--ease-quiet);
+  transition-delay: var(--reveal-delay, 0.2s);
+}
+
+.reveal-line.is-inview,
+.is-inview .reveal-line {
+  transform: scaleX(1);
+}
+
+/* ================================================================
+   Hero — 初回表示のフェード（JS不使用）
+================================================================ */
+
+@keyframes hero-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(1.2rem);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.hero-fade {
+  animation: hero-fade-up 1.2s var(--ease-quiet) both;
+  animation-delay: var(--hero-delay, 0s);
+}
+
+@keyframes scroll-cue {
+  0% {
+    transform: scaleY(0);
+    transform-origin: top center;
+  }
+  45% {
+    transform: scaleY(1);
+    transform-origin: top center;
+  }
+  55% {
+    transform: scaleY(1);
+    transform-origin: bottom center;
+  }
+  100% {
+    transform: scaleY(0);
+    transform-origin: bottom center;
+  }
+}
+
+.scroll-cue-bar {
+  animation: scroll-cue 2.4s ease-in-out infinite;
+}
+
+/* ================================================================
+   Reduced motion
+================================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal,
+  .reveal-line,
+  .hero-fade {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+    animation: none !important;
+  }
+
+  .scroll-cue-bar {
+    animation: none !important;
+    transform: none !important;
+  }
+}
+
+/* ================================================================
+   Utilities
+================================================================ */
+
+.writing-vertical {
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+}
+
+.hairline-b {
+  border-bottom: 1px solid color-mix(in srgb, var(--color-ink) 14%, transparent);
+}
