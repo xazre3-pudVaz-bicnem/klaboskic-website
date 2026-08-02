@@ -24,11 +24,14 @@ export const siteConfig = {
     "家族で過ごした9年間の記憶から生まれた、東南アジア料理とスイーツのテイクアウト＆カフェ。",
 
   /**
-   * 本番URL
-   * 未確定のためVercelの想定URLを仮設定。独自ドメイン決定後に
-   * 環境変数 NEXT_PUBLIC_SITE_URL か、この値を必ず更新すること。
+   * 本番URL（独自ドメイン）
+   *
+   * canonical・OGP・sitemap.xml・robots.txt・構造化データがこの値を使う。
+   * ここが実際の公開ドメインと違うと、検索エンジンに別URLを正規版として
+   * 伝えてしまうため、ドメインを変更した場合は必ずこの値も更新すること。
+   * 末尾のスラッシュは付けない（各所でパスを連結するため）。
    */
-  url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://k-labo.vercel.app",
+  url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.skic.jp",
 
   /** 所在地（確認済み） */
   address: {

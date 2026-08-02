@@ -49,11 +49,15 @@ npm run typecheck  # 型チェック
 **架空の口コミ・評価・受賞歴・価格は掲載しない方針です。**
 未確認の情報は断定せず、Instagramへ誘導する構成にしています。
 
-## 公開前に必ず設定するもの
+## 本番URL
 
-**本番URL** — 独自ドメイン決定後、環境変数 `NEXT_PUBLIC_SITE_URL` を実URLに
-設定してください。canonical / OGP / sitemap がこの値を使用します。
-未設定時は `https://k-labo.vercel.app` が使われます。
+本番ドメインは **[www.skic.jp](https://www.skic.jp)** です。
+[src/data/siteConfig.ts](src/data/siteConfig.ts) の `url` で管理しており、
+canonical / OGP / sitemap.xml / robots.txt / 構造化データがこの値を使います。
+
+ドメインを変更する場合は、この値（または環境変数 `NEXT_PUBLIC_SITE_URL`）を
+必ず更新してください。**実際の公開ドメインと違う値のままにすると、検索エンジンに
+別URLを正規版として伝えてしまい、本来のドメインが検索結果に出なくなります。**
 
 ## 画像について
 
