@@ -79,15 +79,15 @@ export default function PrivacyPage() {
               <h2 className="flex items-baseline gap-4 font-mincho text-lg tracking-[0.1em] sm:text-xl">
                 <span
                   aria-hidden="true"
-                  className="font-serif-en text-sm italic text-gold-deep"
+                  className="font-serif-en text-sm italic text-gold-text"
                 >
                   0{index + 1}
                 </span>
                 {section.title}
               </h2>
               <div className="mt-5 flex flex-col gap-4 border-l border-ink/15 pl-6 text-[0.82rem] leading-[2.3] text-espresso">
-                {section.body.map((paragraph) => (
-                  <p key={paragraph.slice(0, 12)}>{paragraph}</p>
+                {section.body.map((paragraph, i) => (
+                  <p key={i}>{paragraph}</p>
                 ))}
               </div>
             </Reveal>

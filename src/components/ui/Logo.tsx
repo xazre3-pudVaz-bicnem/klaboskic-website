@@ -13,6 +13,11 @@ type LogoProps = {
   withTagline?: boolean;
   /** 最優先で読み込む（ヒーロー内のみ） */
   priority?: boolean;
+  /**
+   * 装飾扱いにする（alt を空にして支援技術から隠す）。
+   * 親要素が aria-label を持っている場合や、同じロゴを重ねて表示する場合に使う。
+   */
+  decorative?: boolean;
   className?: string;
 };
 
@@ -39,6 +44,7 @@ export default function Logo({
   gold = false,
   withTagline = false,
   priority = false,
+  decorative = false,
   className,
 }: LogoProps) {
   const height = INTRINSIC[size];
@@ -56,7 +62,12 @@ export default function Logo({
           表示高さはインラインstyleではなくクラスで指定し、可変にする。 */}
       <Image
         src={src}
-        alt={`${siteConfig.name}（${siteConfig.nameJa}）— ${siteConfig.brandTagline}`}
+        alt={
+          decorative
+            ? ""
+            : `${siteConfig.name}（${siteConfig.nameJa}）— ${siteConfig.brandTagline}`
+        }
+        aria-hidden={decorative || undefined}
         width={width}
         height={height}
         priority={priority}

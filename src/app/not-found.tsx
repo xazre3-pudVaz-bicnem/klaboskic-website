@@ -39,7 +39,7 @@ export default function NotFound() {
           メニューを見る
         </LinkButton>
       </div>
-      <p className="mt-12 font-serif-en text-[0.62rem] uppercase tracking-[0.3em] text-ivory/40">
+      <p className="mt-12 font-serif-en text-[0.62rem] uppercase tracking-[0.3em] text-ivory/70">
         {siteConfig.nameEn}
       </p>
     </div>

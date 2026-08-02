@@ -2,11 +2,15 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useLayoutEffect, useState } from "react";
 import Logo from "@/components/ui/Logo";
 import { InstagramIcon, PhoneIcon } from "@/components/ui/icons";
 import { navigation, siteConfig } from "@/data/siteConfig";
 import { cn } from "@/lib/utils";
+
+/** SSR時は useEffect にフォールバックする useLayoutEffect */
+const useIsomorphicLayoutEffect =
+  typeof window !== "undefined" ? useLayoutEffect : useEffect;
 
 /**
  * 固定ヘッダー
@@ -27,12 +31,28 @@ export default function Header() {
     setOpen(false);
   }
 
-  useEffect(() => {
+  // 描画前に現在のスクロール位置を反映する。useEffect だと、スクロール位置が
+  // 復元された状態で再読み込みしたときにヘッダーが一瞬透過のまま描画され、
+  // 明るい背景の上でロゴとナビが見えなくなる。
+  useIsomorphicLayoutEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  // PC幅まで広げるとメニューボタンごと非表示になるため、
+  // 開いたままだと閉じる手段がなくなりスクロールロックが残る。
+  useEffect(() => {
+    if (!open) return;
+    const mq = window.matchMedia("(min-width: 1024px)");
+    const onChange = () => {
+      if (mq.matches) setOpen(false);
+    };
+    onChange();
+    mq.addEventListener("change", onChange);
+    return () => mq.removeEventListener("change", onChange);
+  }, [open]);
 
   // メニュー展開中は背景のスクロールを止める
   useEffect(() => {
@@ -62,7 +82,8 @@ export default function Header() {
       className={cn(
         "fixed inset-x-0 top-0 z-50 transition-colors duration-500",
         onDark
-          ? "bg-transparent text-ivory"
+          ? // 暗いヒーローの上に載るときはフォーカスリングも明色に切り替える
+            "bg-transparent text-ivory [--focus-ring:var(--color-gold)]"
           : "border-b border-ink/10 bg-ivory/92 text-ink backdrop-blur-md",
       )}
     >
@@ -72,7 +93,21 @@ export default function Header() {
           className="relative z-50 flex min-h-11 items-center"
           aria-label="K-labo トップページへ"
         >
-          <Logo size="md" dark={onDark} priority />
+          {/* 明色版と暗色版を重ねて不透明度で切り替える。
+              src を差し替える方式だと切り替えの瞬間にロゴが消える。
+              リンク名は aria-label が担うため、画像は両方とも装飾扱い。 */}
+          <span className="relative inline-flex">
+            <Logo size="md" priority decorative />
+            <span
+              aria-hidden="true"
+              className={cn(
+                "absolute inset-0 transition-opacity duration-500",
+                onDark ? "opacity-100" : "opacity-0",
+              )}
+            >
+              <Logo size="md" dark priority decorative />
+            </span>
+          </span>
         </Link>
 
         {/* PCナビゲーション */}
@@ -82,10 +117,7 @@ export default function Header() {
               <li key={item.href}>
                 <Link
                   href={item.href}
-                  className={cn(
-                    "group relative flex min-h-11 items-center text-[0.82rem] tracking-[0.14em] transition-opacity hover:opacity-70",
-                    pathname === item.href && "pointer-events-none",
-                  )}
+                  className="group relative flex min-h-11 items-center text-[0.82rem] tracking-[0.14em] transition-opacity hover:opacity-70"
                   aria-current={pathname === item.href ? "page" : undefined}
                 >
                   {item.label}

@@ -5,7 +5,8 @@
   --color-ink: #181515; /* ダークブラックブラウン */
   --color-espresso: #433d3d; /* チャコールブラウン */
   --color-gold: #c9c28c; /* くすみゴールド */
-  --color-gold-deep: #a2996a; /* ゴールド（濃・装飾用） */
+  --color-gold-deep: #a2996a; /* ゴールド（濃）— 罫線・装飾専用。文字には使わない */
+  --color-gold-text: #6b6546; /* 明るい背景に載せる文字用ゴールド（AA 4.7:1以上） */
   --color-olive: #8d876d; /* オリーブグレー */
   --color-olive-deep: #625c48; /* オリーブ（濃・小さな文字用 AA確保） */
   --color-ivory: #f3f0e6; /* ウォームアイボリー */
@@ -52,8 +53,20 @@ body {
   color: var(--color-ink);
 }
 
+/* フォーカスリングは背景の明暗に応じて色を変える。
+   --focus-ring は継承するカスタムプロパティなので、暗い面の要素に
+   一度指定すればその中のすべての要素に伝わる。 */
+:root {
+  --focus-ring: var(--color-ink);
+}
+
+.bg-ink,
+.bg-espresso {
+  --focus-ring: var(--color-gold);
+}
+
 :focus-visible {
-  outline: 2px solid var(--color-olive-deep);
+  outline: 2px solid var(--focus-ring);
   outline-offset: 3px;
 }
 
@@ -61,53 +74,61 @@ body {
    Texture — 紙・布のような質感（微細なノイズ）
 ================================================================ */
 
-.grain {
-  position: relative;
-}
+/* @layer components に入れることが重要。
+   レイヤー外に置くと position:relative が Tailwind のユーティリティ
+   （.fixed / .absolute。これらは @layer utilities にある）を打ち消し、
+   ヒーローのオーバーレイやモバイルメニューの配置が壊れる。 */
+@layer components {
+  .grain {
+    position: relative;
+    /* 独立した重ね合わせコンテキストを作り、::before の z-index:-1 が
+       この要素の外へ抜けないようにする。 */
+    isolation: isolate;
+  }
 
-.grain::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 240 240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeComponentTransfer%3E%3CfeFuncA type='linear' slope='0.055'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='240' height='240' filter='url(%23n)'/%3E%3C/svg%3E");
-  background-size: 240px 240px;
-}
-
-.grain > * {
-  position: relative;
-  z-index: 1;
+  .grain::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    /* 負の z-index にすることで、要素自身の背景の上・中身の下に描画される。
+       子要素側に position を強制する必要がなくなる。 */
+    z-index: -1;
+    pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 240 240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeComponentTransfer%3E%3CfeFuncA type='linear' slope='0.055'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='240' height='240' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size: 240px 240px;
+  }
 }
 
 /* ================================================================
    Reveal — スクロールに合わせた控えめな出現
+
+   要素を隠すルールは .js（JavaScriptが動いている場合のみ <html> に付与）
+   の配下に限定する。JSが無効・失敗・読み込み前でも本文が見えなくならない。
 ================================================================ */
 
-.reveal {
+.js .reveal {
   opacity: 0;
   transform: translateY(1.4rem);
   transition:
     opacity 1s var(--ease-quiet),
     transform 1s var(--ease-quiet);
   transition-delay: var(--reveal-delay, 0s);
-  will-change: opacity, transform;
 }
 
-.reveal.is-inview {
+.js .reveal.is-inview {
   opacity: 1;
   transform: none;
 }
 
-.reveal-line {
+.js .reveal-line {
   transform: scaleX(0);
   transform-origin: left center;
   transition: transform 1.4s var(--ease-quiet);
   transition-delay: var(--reveal-delay, 0.2s);
 }
 
-.reveal-line.is-inview,
-.is-inview .reveal-line {
+.js .reveal-line.is-inview,
+.js .is-inview .reveal-line {
   transform: scaleX(1);
 }
 
@@ -159,6 +180,8 @@ body {
 ================================================================ */
 
 @media (prefers-reduced-motion: reduce) {
+  .js .reveal,
+  .js .reveal-line,
   .reveal,
   .reveal-line,
   .hero-fade {

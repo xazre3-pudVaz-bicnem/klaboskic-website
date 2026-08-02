@@ -60,8 +60,8 @@ export default function NewsPage() {
                   {item.title}
                 </h2>
                 <div className="mt-6 flex flex-col gap-4 text-[0.85rem] leading-[2.3] text-espresso">
-                  {item.body.map((paragraph) => (
-                    <p key={paragraph.slice(0, 12)}>{paragraph}</p>
+                  {item.body.map((paragraph, i) => (
+                    <p key={i}>{paragraph}</p>
                   ))}
                 </div>
               </article>

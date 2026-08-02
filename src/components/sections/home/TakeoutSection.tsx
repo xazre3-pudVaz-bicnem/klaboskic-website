@@ -80,7 +80,7 @@ export default function TakeoutSection() {
                 className="border-b border-ink/12 first:border-t"
               >
                 <div className="flex items-baseline gap-6 py-7 sm:gap-10">
-                  <span className="font-serif-en text-[0.7rem] tracking-[0.2em] text-gold-deep">
+                  <span className="font-serif-en text-[0.7rem] tracking-[0.2em] text-gold-text">
                     0{index + 1}
                   </span>
                   <div className="flex flex-col gap-1.5">

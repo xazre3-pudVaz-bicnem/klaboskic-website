@@ -56,7 +56,7 @@ export default function ConceptSection() {
           />
           <p
             aria-hidden="true"
-            className="writing-vertical absolute -right-2 top-1/2 hidden -translate-y-1/2 font-serif-en text-[0.62rem] uppercase tracking-[0.32em] text-olive-deep/60 lg:block"
+            className="writing-vertical absolute -right-2 top-1/2 hidden -translate-y-1/2 font-serif-en text-[0.62rem] uppercase tracking-[0.32em] text-olive-deep lg:block"
           >
             Nine years of family life
           </p>

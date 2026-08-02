@@ -138,7 +138,7 @@ export default function TakeoutPage() {
                   sizes="(min-width: 1024px) 23vw, (min-width: 640px) 46vw, 100vw"
                 />
                 <figcaption className="mt-5 flex flex-col gap-2">
-                  <span className="font-serif-en text-[0.62rem] uppercase tracking-[0.3em] text-gold-deep">
+                  <span className="font-serif-en text-[0.62rem] uppercase tracking-[0.3em] text-gold-text">
                     0{index + 1}
                   </span>
                   <h3 className="font-mincho text-lg tracking-[0.1em]">
@@ -174,7 +174,7 @@ export default function TakeoutPage() {
               <Reveal as="li" key={step.number} delay={index * 0.12}>
                 <div className="flex flex-col gap-5">
                   <div className="flex items-center gap-4">
-                    <span className="font-serif-en text-3xl italic tracking-[0.06em] text-gold-deep">
+                    <span className="font-serif-en text-3xl italic tracking-[0.06em] text-gold-text">
                       {step.number}
                     </span>
                     <span
@@ -272,7 +272,7 @@ export default function TakeoutPage() {
                 className="border-b border-ink/12 py-8 first:border-t"
               >
                 <dt className="flex items-baseline gap-5">
-                  <span className="font-serif-en text-sm italic text-gold-deep">
+                  <span className="font-serif-en text-sm italic text-gold-text">
                     Q
                   </span>
                   <span className="font-mincho text-base tracking-[0.08em] sm:text-lg">

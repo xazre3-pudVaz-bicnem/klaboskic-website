@@ -186,7 +186,7 @@ export default function AccessPage() {
           <div className="mt-12 grid gap-10 md:grid-cols-2">
             <Reveal delay={0.1}>
               <div className="flex h-full flex-col gap-4 border border-ink/12 bg-ivory px-8 py-9">
-                <p className="font-serif-en text-[0.62rem] uppercase tracking-[0.3em] text-gold-deep">
+                <p className="font-serif-en text-[0.62rem] uppercase tracking-[0.3em] text-gold-text">
                   From Murasaki Sta.
                 </p>
                 <h3 className="font-mincho text-lg tracking-[0.1em]">
@@ -199,7 +199,7 @@ export default function AccessPage() {
             </Reveal>
             <Reveal delay={0.2}>
               <div className="flex h-full flex-col gap-4 border border-ink/12 bg-ivory px-8 py-9">
-                <p className="font-serif-en text-[0.62rem] uppercase tracking-[0.3em] text-gold-deep">
+                <p className="font-serif-en text-[0.62rem] uppercase tracking-[0.3em] text-gold-text">
                   From Nishitetsu-Futsukaichi
                 </p>
                 <h3 className="font-mincho text-lg tracking-[0.1em]">

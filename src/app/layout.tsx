@@ -84,12 +84,23 @@ export default function RootLayout({
       lang="ja"
       className={`${shippori.variable} ${zenKaku.variable} ${garamond.variable}`}
     >
+      {/* JSが動く環境でだけ <html> に .js を付ける。スクロール表示の
+          アニメーション（.reveal）はこのクラス配下でのみ要素を隠すため、
+          JSが無効・失敗しても本文が見えなくなることがない。
+          パース中に同期実行されるので、描画前にクラスが付く。 */}
+      <script
+        dangerouslySetInnerHTML={{
+          __html: "document.documentElement.classList.add('js')",
+        }}
+      />
       <body className="bg-ivory font-gothic text-ink antialiased">
         <JsonLd data={websiteJsonLd()} />
         <JsonLd data={cafeJsonLd()} />
+        {/* focus:absolute だと位置決めの基準が文書の先頭になり、
+            スクロール中にフォーカスすると画面外へ出てしまう。fixed で固定する。 */}
         <a
           href="#main"
-          className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[100] focus:bg-ink focus:px-5 focus:py-3 focus:text-sm focus:text-ivory"
+          className="sr-only [--focus-ring:var(--color-gold)] focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:bg-ink focus:px-5 focus:py-3 focus:text-sm focus:text-ivory"
         >
           本文へスキップ
         </a>

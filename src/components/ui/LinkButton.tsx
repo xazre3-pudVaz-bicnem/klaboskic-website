@@ -34,6 +34,13 @@ export default function LinkButton({
     ? { target: "_blank", rel: "noopener noreferrer" }
     : {};
 
+  // 外部リンクは、別タブで開くことを支援技術にも伝える。
+  const accessibleName =
+    ariaLabel ??
+    (external && typeof children === "string"
+      ? `${children}（新しいタブで開きます）`
+      : undefined);
+
   if (variant === "text") {
     const textClass = cn(
       "group inline-flex min-h-11 items-center gap-3 text-sm tracking-[0.12em] transition-colors duration-300",
@@ -51,11 +58,11 @@ export default function LinkButton({
       </>
     );
     return external ? (
-      <a href={href} className={textClass} aria-label={ariaLabel} {...externalProps}>
+      <a href={href} className={textClass} aria-label={accessibleName} {...externalProps}>
         {inner}
       </a>
     ) : (
-      <Link href={href} className={textClass} aria-label={ariaLabel}>
+      <Link href={href} className={textClass} aria-label={accessibleName}>
         {inner}
       </Link>
     );
@@ -80,11 +87,11 @@ export default function LinkButton({
   );
 
   return external ? (
-    <a href={href} className={outlineClass} aria-label={ariaLabel} {...externalProps}>
+    <a href={href} className={outlineClass} aria-label={accessibleName} {...externalProps}>
       {inner}
     </a>
   ) : (
-    <Link href={href} className={outlineClass} aria-label={ariaLabel}>
+    <Link href={href} className={outlineClass} aria-label={accessibleName}>
       {inner}
     </Link>
   );

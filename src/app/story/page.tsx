@@ -154,7 +154,7 @@ export default function StoryPage() {
                         "font-serif-en text-4xl italic tracking-[0.08em] sm:text-5xl",
                         index === chapters.length - 1
                           ? "text-gold"
-                          : "text-gold-deep",
+                          : "text-gold-text",
                       )}
                     >
                       {chapter.number}
@@ -205,8 +205,8 @@ export default function StoryPage() {
                         : "text-espresso",
                     )}
                   >
-                    {chapter.paragraphs.map((paragraph) => (
-                      <p key={paragraph.slice(0, 12)}>{paragraph}</p>
+                    {chapter.paragraphs.map((paragraph, i) => (
+                      <p key={i}>{paragraph}</p>
                     ))}
                   </Reveal>
                 </div>

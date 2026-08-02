@@ -43,9 +43,11 @@ export default function Placeholder({
   priority = false,
   className,
 }: PlaceholderProps) {
+  // 呼び出し側が <figure> + <figcaption> で包むことが多いため、
+  // ここでは意味づけを持たない <div> を返す（figure の入れ子を避ける）。
   if (src) {
     return (
-      <figure className={cn("relative overflow-hidden", aspect, className)}>
+      <div className={cn("relative overflow-hidden", aspect, className)}>
         <Image
           src={src}
           alt={alt}
@@ -54,7 +56,7 @@ export default function Placeholder({
           priority={priority}
           className="object-cover"
         />
-      </figure>
+      </div>
     );
   }
 
