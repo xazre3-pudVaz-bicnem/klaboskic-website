@@ -9,7 +9,8 @@ export default function Footer() {
 
   return (
     <footer className="grain bg-ink text-ivory">
-      <div className="mx-auto w-full max-w-6xl px-5 py-16 sm:px-8 sm:py-20">
+      {/* モバイルでは画面下の固定アクションバーに隠れないよう下余白を足す */}
+      <div className="mx-auto w-full max-w-6xl px-5 pb-[calc(5rem+env(safe-area-inset-bottom))] pt-16 sm:px-8 sm:pt-20 lg:pb-20">
         <div className="flex flex-col gap-12 md:flex-row md:justify-between">
           {/* ブランド */}
           <div className="flex flex-col gap-5">
@@ -19,7 +20,7 @@ export default function Footer() {
             <p className="max-w-xs text-xs leading-[2] text-ivory/70">
               {siteConfig.tagline}
               <br />
-              東南アジア料理とスイーツのテイクアウト＆カフェ
+              {siteConfig.shopType}
             </p>
           </div>
 

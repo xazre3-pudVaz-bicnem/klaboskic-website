@@ -1,5 +1,5 @@
 import { siteConfig } from "@/data/siteConfig";
-import { menuCategories, menuItems } from "@/data/menu";
+import { menuCategories, menuItems, type MenuItem } from "@/data/menu";
 
 /**
  * 構造化データ（JSON-LD）ビルダー
@@ -46,9 +46,9 @@ export function cafeJsonLd() {
     alternateName: [siteConfig.nameJa, siteConfig.nameEn],
     slogan: siteConfig.brandTagline,
     description:
-      "福岡県筑紫野市紫・紫駅東口すぐのテイクアウト＆カフェ。家族で過ごしたバンコクでの9年間を原点に、バインミーなどの東南アジア料理、スイーツ、お惣菜、ドリンクを提供しています。",
+      "福岡県筑紫野市紫・紫駅東口から徒歩約0分のカフェ＆テイクアウトショップ。家族で暮らしたバンコクでの9年間を原点に、バインミーやガパオライスなどのアジア料理、黒毛和牛ローストビーフや西京焼きなどのお肉・お魚料理、彩りバターサンドなどのオリジナルスイーツを提供しています。",
     url: BASE,
-    image: `${BASE}/images/hero/banh-mi-shrimp-set.jpg`,
+    image: `${BASE}/images/hero/table-set.jpg`,
     logo: `${BASE}/images/brand/k-labo-logo-original.jpg`,
     address: postalAddress(),
     servesCuisine: siteConfig.servesCuisine,
@@ -57,6 +57,17 @@ export function cafeJsonLd() {
       name,
     })),
     hasMenu: `${BASE}/menu`,
+    ...(siteConfig.parking.spaces
+      ? {
+          amenityFeature: [
+            {
+              "@type": "LocationFeatureSpecification",
+              name: `駐車場（${siteConfig.parking.location}・${siteConfig.parking.spaces}・${siteConfig.parking.fee}）`,
+              value: true,
+            },
+          ],
+        }
+      : {}),
     sameAs: [siteConfig.instagram.url],
     ...(siteConfig.phone ? { telephone: siteConfig.phone } : {}),
     ...(siteConfig.hours.length
@@ -88,8 +99,8 @@ export function breadcrumbJsonLd(
   };
 }
 
-/** メニュー（確認済みの内容のみ） */
-export function menuJsonLd() {
+/** メニュー（確認済みの内容のみ。価格は入力済みの商品にだけ付与する） */
+export function menuJsonLd(items: MenuItem[] = menuItems) {
   return {
     "@context": "https://schema.org",
     "@type": "Menu",
@@ -100,13 +111,22 @@ export function menuJsonLd() {
       "@type": "MenuSection",
       name: category.name,
       description: category.description,
-      hasMenuItem: menuItems
+      hasMenuItem: items
         .filter((item) => item.category === category.id && item.isAvailable)
         .map((item) => ({
           "@type": "MenuItem",
           name: item.name,
           description: item.description,
-          // 価格は未確認のため offers は設定しない
+          ...(item.image ? { image: `${BASE}${item.image}` } : {}),
+          ...(item.price !== null && !item.priceNote
+            ? {
+                offers: {
+                  "@type": "Offer",
+                  price: item.price,
+                  priceCurrency: "JPY",
+                },
+              }
+            : {}),
         })),
     })),
   };

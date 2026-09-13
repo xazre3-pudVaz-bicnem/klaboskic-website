@@ -2,12 +2,12 @@ import Reveal from "@/components/ui/Reveal";
 import { InstagramIcon } from "@/components/ui/icons";
 import { siteConfig } from "@/data/siteConfig";
 
-/** 09. Instagram導線 */
+/** Instagram導線 */
 export default function InstagramCta() {
   return (
     <section
       aria-labelledby="instagram-heading"
-      className="mx-auto w-full max-w-6xl px-5 pb-28 pt-4 sm:px-8 sm:pb-36"
+      className="mx-auto w-full max-w-6xl px-5 py-20 sm:px-8 sm:py-28"
     >
       <Reveal>
         <div className="grain relative overflow-hidden bg-ink px-6 py-16 text-center text-ivory sm:px-10 sm:py-24">
@@ -21,7 +21,7 @@ export default function InstagramCta() {
             </p>
             <h2
               id="instagram-heading"
-              className="font-mincho text-2xl leading-[1.7] tracking-[0.1em] sm:text-3xl"
+              className="font-mincho text-[1.35rem] leading-[1.8] tracking-[0.08em] sm:text-3xl sm:tracking-[0.1em]"
             >
               日々のメニューと営業日は、
               <br className="sm:hidden" />

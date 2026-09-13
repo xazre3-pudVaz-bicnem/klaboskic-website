@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { EB_Garamond, Shippori_Mincho, Zen_Kaku_Gothic_New } from "next/font/google";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
+import MobileActionBar from "@/components/layout/MobileActionBar";
 import JsonLd from "@/components/ui/JsonLd";
 import { cafeJsonLd, websiteJsonLd } from "@/lib/jsonld";
 import { siteConfig } from "@/data/siteConfig";
@@ -38,18 +39,20 @@ export const metadata: Metadata = {
     template: "%s｜K-labo｜筑紫野のカフェ・テイクアウト",
   },
   description:
-    "福岡県筑紫野市紫、紫駅すぐのK-labo。家族で過ごしたバンコクでの9年間を原点に、バインミーをはじめとした東南アジア料理、スイーツ、ドリンクを楽しめるテイクアウト＆カフェです。",
+    "筑紫野市・紫駅東口から徒歩約0分のK-labo。バンコクで暮らした9年間を原点に、バインミーやガパオ、黒毛和牛ローストビーフ、西京焼き、彩りバターサンドなどを楽しめるカフェ＆テイクアウトショップです。",
   keywords: [
     "筑紫野 カフェ",
     "筑紫野 テイクアウト",
     "紫駅 カフェ",
     "筑紫野 バインミー",
-    "筑紫野 東南アジア料理",
+    "筑紫野 ローストビーフ",
+    "筑紫野 スイーツ",
+    "紫駅 テイクアウト",
   ],
   openGraph: {
     title: "K-labo｜筑紫野のカフェ・テイクアウト｜紫駅すぐ",
     description:
-      "家族で過ごしたバンコクでの9年間を原点に、バインミーなどの東南アジア料理、スイーツ、ドリンクを楽しめる筑紫野市・紫駅すぐのテイクアウト＆カフェ。",
+      "アジアで出会ったおいしさを、日常の一皿へ。バインミー、ガパオ、黒毛和牛ローストビーフ、彩りバターサンドまで。筑紫野市・紫駅東口すぐのカフェ＆テイクアウト。",
     url: "/",
     siteName: "K-labo（ケイラボ）",
     locale: "ja_JP",
@@ -107,6 +110,7 @@ export default function RootLayout({
         <Header />
         <main id="main">{children}</main>
         <Footer />
+        <MobileActionBar />
       </body>
     </html>
   );

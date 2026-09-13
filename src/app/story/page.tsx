@@ -43,8 +43,8 @@ const chapters: Chapter[] = [
       "はじまりは、家族で移り住んだバンコクでの暮らしでした。気がつけば、その街で過ごした時間は9年になっていました。",
       "暮らすほどに、あの街の空気と食卓は、私たちの日常そのものになっていきました。",
     ],
-    image: "/images/story/lemon-prep.jpg",
-    imageAlt: "輪切りにしたレモンを並べたK-laboの仕込みのようす",
+    image: "/images/story/bangkok-wat-arun.jpg",
+    imageAlt: "夕暮れのチャオプラヤー川と、ライトアップされたバンコクの寺院ワット・アルン",
   },
   {
     number: "02",
@@ -76,8 +76,8 @@ const chapters: Chapter[] = [
       "思い出の中の味を、自分たちの手で。そして、まだ東南アジアの料理に馴染みのない人にも、日常の延長で気軽に楽しんでもらえたら。",
       "そんな思いが、少しずつかたちになっていきました。",
     ],
-    image: "/images/story/staff-piping-cookies.jpg",
-    imageAlt: "クッキーにクリームを絞るK-laboのスタッフの手元",
+    image: "/images/story/staff-piping-butter-sandwich.jpg",
+    imageAlt: "彩りバターサンドの生地にクリームを絞るK-laboのスタッフ",
   },
   {
     number: "05",
@@ -92,11 +92,11 @@ const chapters: Chapter[] = [
   },
   {
     number: "06",
-    titleEn: "Bangkok to Chikushino",
-    title: "バンコクの記憶を、筑紫野の日常へ",
+    titleEn: "Rooted in Asia",
+    title: "アジアを原点に、ジャンルにとらわれず",
     paragraphs: [
-      "バインミーをはじめとした東南アジアの料理、かわいらしいスイーツ、お肉やお魚のお惣菜。K-laboの品々には、バンコクで過ごした日々の記憶が息づいています。",
-      "今日のごはんに、もう一品。がんばった日の、ちいさなごほうびに。バンコクで出会ったおいしさを、筑紫野の日常へ。",
+      "バインミーやガパオなどのアジアの料理、黒毛和牛のローストビーフや西京焼き、彩りバターサンドをはじめとしたオリジナルスイーツ。K-laboの品々には、バンコクで過ごした日々の記憶が息づいています。",
+      "今日のごはんに、もう一品。がんばった日の、ちいさなごほうびに。アジアで出会ったおいしさを、日常の一皿へ。",
     ],
     image: "/images/shop/interior-entrance.jpg",
     imageAlt: "K-laboのロゴを染め抜いた暖簾がかかる店内の入口",

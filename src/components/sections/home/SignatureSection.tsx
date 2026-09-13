@@ -1,102 +1,155 @@
+import Link from "next/link";
 import Placeholder from "@/components/ui/Placeholder";
 import Reveal from "@/components/ui/Reveal";
 import SectionHeading from "@/components/ui/SectionHeading";
 import LinkButton from "@/components/ui/LinkButton";
-import { PRICE_UNCONFIRMED } from "@/data/menu";
+import { ArrowRightIcon } from "@/components/ui/icons";
+import { formatPrice, signatureItemIds, type MenuItem } from "@/data/menu";
+import { getMenuItems } from "@/lib/menu";
+import { cn } from "@/lib/utils";
 
-/** 03. シグネチャーメニュー — 非対称レイアウト */
-export default function SignatureSection() {
+/** トップページ用の見せ方（写真・ひとこと・ジャンル）。価格はメニューデータから取得 */
+const presentation: Record<
+  (typeof signatureItemIds)[number],
+  { tag: string; catch: string; image: string; alt: string }
+> = {
+  "banhmi-shrimp-avocado": {
+    tag: "アジアン",
+    catch: "軽やかなパンに、海老とアボカド。K-laboのはじまりの味。",
+    image: "/images/food/banh-mi-shrimp.jpg",
+    alt: "海老とアボカド、パクチーをはさんだK-laboのバインミー",
+  },
+  "gapao-rice": {
+    tag: "アジアン",
+    catch: "バジルが香る、タイの定番ごはん。",
+    image: "/images/food/gapao-rice.jpg",
+    alt: "目玉焼きをのせたK-laboのガパオライス",
+  },
+  "roast-beef": {
+    tag: "お肉料理",
+    catch: "黒毛和牛を、しっとりやわらかく。",
+    image: "/images/delica/roast-beef-slices.jpg",
+    alt: "ベビーリーフの上に並べたK-laboの黒毛和牛ローストビーフ",
+  },
+  stroopwafel: {
+    tag: "スイーツ",
+    catch: "ざくっと香ばしい、オランダ生まれの焼き菓子。",
+    image: "/images/sweets/stroopwafel-nuts.jpg",
+    alt: "ナッツとチョコレートをあしらったK-laboのストロープワッフル",
+  },
+  "butter-sandwich": {
+    tag: "スイーツ",
+    catch: "色とりどりの生地で、バタークリームをサンド。",
+    image: "/images/sweets/butter-sandwich.jpg",
+    alt: "4色の生地でクリームをはさんだK-laboの彩りバターサンド",
+  },
+};
+
+function SignatureCard({
+  item,
+  large = false,
+}: {
+  item: MenuItem;
+  large?: boolean;
+}) {
+  const view = presentation[item.id as keyof typeof presentation];
+  const price = formatPrice(item);
+
   return (
-    <section
-      aria-labelledby="signature-heading"
-      className="border-y border-ink/10 bg-paper"
-    >
-      <div className="mx-auto w-full max-w-6xl px-5 py-24 sm:px-8 sm:py-36">
-        <SectionHeading
-          index="02"
-          label="Signature"
-          title={
-            <span id="signature-heading">
-              バインミーと、
-              <br className="sm:hidden" />
-              日々のおいしいもの
-            </span>
-          }
+    <Link href={`/menu#${item.id}`} className="group flex h-full flex-col">
+      <div className="overflow-hidden">
+        <Placeholder
+          src={view.image}
+          alt={view.alt}
+          aspect={large ? "aspect-[4/3] lg:aspect-[4/5]" : "aspect-square"}
+          sizes={large ? "(min-width: 1024px) 42vw, 100vw" : "(min-width: 1024px) 28vw, 50vw"}
+          className="transition-transform duration-1000 ease-quiet group-hover:scale-[1.03]"
         />
+      </div>
+      <div className={cn("flex flex-1 flex-col gap-1.5", large ? "mt-5" : "mt-3.5 sm:mt-4")}>
+        <p className="text-[0.62rem] tracking-[0.2em] text-gold-text">{view.tag}</p>
+        <h3
+          className={cn(
+            "flex items-center gap-2 font-mincho tracking-[0.06em]",
+            large ? "text-2xl" : "text-[0.98rem] leading-snug sm:text-lg",
+          )}
+        >
+          {large ? item.name : item.name.replace(/^バインミー /, "")}
+          <ArrowRightIcon className="h-3.5 w-3.5 shrink-0 text-olive-deep transition-transform duration-300 group-hover:translate-x-1" />
+        </h3>
+        <p
+          className={cn(
+            "leading-[1.9] text-espresso",
+            large ? "max-w-md text-[0.84rem]" : "hidden text-[0.78rem] sm:block",
+          )}
+        >
+          {view.catch}
+        </p>
+        <p
+          className={cn(
+            "mt-auto pt-1 tracking-[0.04em]",
+            price.hasPrice
+              ? "text-sm text-ink"
+              : "text-[0.66rem] leading-[1.7] text-olive-deep sm:text-[0.7rem]",
+          )}
+        >
+          {price.text}
+        </p>
+      </div>
+    </Link>
+  );
+}
 
-        <div className="mt-14 grid gap-x-10 gap-y-16 md:grid-cols-12 sm:mt-20">
-          {/* メイン: バインミー */}
-          <Reveal className="md:col-span-7">
-            <figure>
-              <Placeholder
-                src="/images/food/banh-mi-shrimp.jpg"
-                alt="海老とパクチーをはさんだK-laboのバインミー"
-                aspect="aspect-[4/3]"
-                sizes="(min-width: 768px) 58vw, 100vw"
-              />
-              <figcaption className="mt-6 flex flex-col gap-2.5">
-                <p className="font-serif-en text-[0.65rem] uppercase tracking-[0.3em] text-olive-deep">
-                  Banh Mi
-                </p>
-                <p className="font-mincho text-2xl tracking-[0.08em]">
-                  バインミー
-                </p>
-                <p className="max-w-md text-[0.82rem] leading-[2.1] text-espresso">
-                  軽い食感のパンに具材を挟んだ、ベトナム生まれのサンドイッチ。片手で気軽に楽しめる、K-laboの看板メニューです。
-                </p>
-                <p className="text-[0.72rem] tracking-[0.06em] text-olive-deep">
-                  {PRICE_UNCONFIRMED}
-                </p>
-              </figcaption>
-            </figure>
+/** 02. 代表商品 — アジアの料理からお肉料理、スイーツまで、K-laboの幅を一目で伝える */
+export default async function SignatureSection() {
+  const items = await getMenuItems();
+  const featured = signatureItemIds
+    .map((id) => items.find((item) => item.id === id))
+    .filter((item): item is MenuItem => Boolean(item));
+  const [main, ...rest] = featured;
+
+  return (
+    <section aria-labelledby="signature-heading" className="border-b border-ink/10 bg-paper">
+      <div className="mx-auto w-full max-w-6xl px-5 py-20 sm:px-8 sm:py-32">
+        <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
+          <SectionHeading
+            index="01"
+            label="Signature"
+            title={
+              <span id="signature-heading">
+                アジアの味から、
+                <br className="sm:hidden" />
+                スイーツまで
+              </span>
+            }
+          />
+          <Reveal delay={0.1}>
+            <p className="max-w-sm text-[0.84rem] leading-[2.1] text-espresso">
+              バインミーやガパオに、黒毛和牛のローストビーフ、手づくりのスイーツ。ジャンルにとらわれない、K-laboの代表的な味です。
+            </p>
           </Reveal>
-
-          {/* サブ: スイーツ・デリカ */}
-          <div className="flex flex-col gap-14 md:col-span-5 md:mt-24">
-            <Reveal delay={0.15}>
-              <figure>
-                <Placeholder
-                  src="/images/sweets/stroopwafel-nuts.jpg"
-                  alt="ナッツとチョコレートをあしらったK-laboのストロープワッフル"
-                  aspect="aspect-square"
-                  sizes="(min-width: 768px) 38vw, 100vw"
-                />
-                <figcaption className="mt-5 flex flex-col gap-2">
-                  <p className="font-mincho text-lg tracking-[0.08em]">
-                    ざくっと香ばしい、ストロープワッフル
-                  </p>
-                  <p className="text-[0.8rem] leading-[2] text-espresso">
-                    おやつの時間にも、手土産にも。季節のスイーツをご用意しています。
-                  </p>
-                </figcaption>
-              </figure>
-            </Reveal>
-            <Reveal delay={0.25}>
-              <figure>
-                <Placeholder
-                  src="/images/delica/bento-premium.jpg"
-                  alt="刺身やローストビーフを詰め合わせたK-laboの幕の内弁当"
-                  aspect="aspect-[5/4]"
-                  sizes="(min-width: 768px) 38vw, 100vw"
-                />
-                <figcaption className="mt-5 flex flex-col gap-2">
-                  <p className="font-mincho text-lg tracking-[0.08em]">
-                    お肉とお魚の、お惣菜とお弁当
-                  </p>
-                  <p className="text-[0.8rem] leading-[2] text-espresso">
-                    今日の食卓にもう一品。そのまま並べられるデリカが揃います。
-                  </p>
-                </figcaption>
-              </figure>
-            </Reveal>
-          </div>
         </div>
 
-        <Reveal delay={0.1} className="mt-16 flex flex-col items-start gap-6 sm:flex-row sm:items-center sm:justify-between">
+        <div className="mt-12 grid gap-x-10 gap-y-10 sm:mt-16 lg:grid-cols-12">
+          {main && (
+            <Reveal className="lg:col-span-5">
+              <SignatureCard item={main} large />
+            </Reveal>
+          )}
+          <ul className="grid grid-cols-2 gap-x-3 gap-y-9 sm:gap-x-6 sm:gap-y-12 lg:col-span-7">
+            {rest.map((item, index) => (
+              <Reveal as="li" key={item.id} delay={0.08 + (index % 2) * 0.1}>
+                <SignatureCard item={item} />
+              </Reveal>
+            ))}
+          </ul>
+        </div>
+
+        <Reveal delay={0.1} className="mt-14 flex flex-col items-start gap-5 sm:flex-row sm:items-center sm:justify-between">
           <p className="text-[0.75rem] leading-[1.9] text-olive-deep">
-            当日のラインナップ・価格は、店頭および公式Instagramでご案内しています。
+            ほかにも、デザート＆ドリンク付きのランチセットや、ヤムウンセン、ロコモコ、西京焼き、お弁当などをご用意しています。
           </p>
-          <LinkButton href="/menu">メニューを見る</LinkButton>
+          <LinkButton href="/menu">メニューと価格を見る</LinkButton>
         </Reveal>
       </div>
     </section>

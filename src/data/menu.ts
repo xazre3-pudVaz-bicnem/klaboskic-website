@@ -1,30 +1,51 @@
 /**
  * メニューデータ
  *
- * 掲載しているのは、K-labo提供の商品写真および店頭掲出物・公式Instagramで
- * 確認できた内容のみ。ページ上では「これまでにご提供した商品の一例」として
- * 案内し、当日の提供有無・正式な商品名・価格は店頭／Instagramへ誘導する。
+ * ────────────────────────────────────────────────
+ *  価格の変更方法（どちらか一方）
+ * ────────────────────────────────────────────────
+ *  A. このファイルの price を書き換える
+ *     例）price: null  →  price: 650
+ *     保存（GitHub上で編集した場合はコミット）すると、自動で再公開されます。
  *
- * price が null の商品は「価格は店頭・Instagramでご確認ください」と表示される。
- * 存在が確認できていない商品を推測で追加しないこと。
+ *  B. Googleスプレッドシートで管理する（おすすめ）
+ *     環境変数 MENU_SHEET_CSV_URL にスプレッドシートの公開CSVのURLを設定すると、
+ *     スプレッドシートの「価格」「提供状況」がこのファイルより優先されます。
+ *     詳しい手順は README.md の「メニュー価格の更新」を参照。
+ * ────────────────────────────────────────────────
+ *
+ * - kind: "regular"（定番）… 価格を掲載する商品。price 未入力の間は
+ *   「価格は店頭でご確認ください」と表示。
+ * - kind: "variable"（日替わり・仕入れで変動）… 価格の代わりに
+ *   「Instagramでご確認ください」と表示。
+ * - 価格はすべて税込・円。
+ * - 掲載するのは、K-labo提供の写真や店頭掲出物で確認できた商品のみ。
+ *   存在が確認できていない商品を推測で追加しないこと。
  */
 
 export type MenuCategoryId =
-  | "banhmi"
-  | "food"
+  | "lunch"
+  | "asian"
+  | "meatfish"
   | "delica"
   | "sweets"
   | "drinks";
 
 export type MenuItem = {
+  /** 識別子（半角英数字とハイフン）。スプレッドシートの id 列と一致させる */
+  id: string;
   /** 商品名 */
   name: string;
   /** 英字表記 */
   nameEn: string;
   /** 短い説明 */
   description: string;
-  /** 価格（税込・円）。未確認の場合は null */
+  /** 定番 or 日替わり・仕入れで変動 */
+  kind: "regular" | "variable";
+  /** 価格（税込・円）。未入力の場合は null */
   price: number | null;
+  /** 価格の補足（例: "〜"、"（2個入り）"） */
+  priceNote?: string;
   /** カテゴリ */
   category: MenuCategoryId;
   /** 商品写真のパス。実写真がない場合は null（プレースホルダー表示） */
@@ -44,46 +65,58 @@ export type MenuCategory = {
   name: string;
   nameEn: string;
   description: string;
-  /** ラインナップが日替わり・未確認の場合の案内文 */
+  /** ラインナップが日替わり・変動する場合の案内文 */
   lineupNote?: string;
+  /** 近日登場予定の商品名（「Coming Soon」として表示） */
+  comingSoon?: string[];
 };
 
 export const menuCategories: MenuCategory[] = [
   {
-    id: "banhmi",
-    name: "バインミー",
-    nameEn: "Banh Mi",
+    id: "lunch",
+    name: "ランチセット",
+    nameEn: "Lunch Set",
     description:
-      "ベトナム生まれのサンドイッチ。軽い食感のパンに具材を合わせた、K-laboの看板メニューです。",
+      "メインの一皿に、デザートとドリンクが付いたランチセット。お食事からひと息つく時間まで、K-laboの味をまとめて楽しめます。",
     lineupNote:
-      "具材は仕入れにより変わります。当日の種類は店頭・公式Instagramでご確認ください。",
+      "セットのメイン・デザート・ドリンクの内容は、店頭・公式Instagramでご案内しています。",
   },
   {
-    id: "food",
-    name: "フード",
-    nameEn: "Food",
+    id: "asian",
+    name: "アジアンフード",
+    nameEn: "Asian",
     description:
-      "バンコクでの暮らしを原点にしたオリエンタルメニューと、魚屋さんから届く新鮮な魚や低温調理のローストビーフを使った和洋メニュー。",
+      "バンコクでの暮らしを原点にした、K-laboのはじまりの味。バインミーやガパオライスなど、香りと彩りを楽しめる料理です。",
     lineupNote:
-      "日替わり・週替わりの品もあります。当日のラインナップは店頭・公式Instagramでご案内しています。",
+      "バインミーの具材は仕入れにより変わることがあります。当日の種類は店頭・公式Instagramでご案内しています。",
+  },
+  {
+    id: "meatfish",
+    name: "お肉・お魚料理",
+    nameEn: "Meat & Fish",
+    description:
+      "黒毛和牛のローストビーフや、店内で漬け込む西京焼き。素材と向き合いながら、ひと皿ずつ仕上げています。",
+    lineupNote:
+      "お魚は仕入れにより内容が変わります。当日のラインナップは店頭・公式Instagramでご確認ください。",
   },
   {
     id: "delica",
-    name: "デリカ・お惣菜",
+    name: "デリカ・お弁当",
     nameEn: "Delica",
     description:
-      "お肉やお魚を使ったお惣菜とお弁当。今日の食卓にもう一品、そのまま並べられるおかずです。",
+      "お肉やお魚のおかずを詰め合わせたお弁当と、集まりの席に映えるオードブル。今日の食卓に、そのまま並べられます。",
     lineupNote:
-      "内容は日によって変わります。オードブルなどのご相談は店頭・公式Instagramへどうぞ。",
+      "お弁当の内容は日替わりです。オードブルのご注文・ご相談は、お電話または公式InstagramのDMへどうぞ。",
   },
   {
     id: "sweets",
     name: "スイーツ",
     nameEn: "Sweets",
     description:
-      "看板のストロープワッフルをはじめ、見た目もかわいらしい手づくりのスイーツ。おやつの時間や、ちょっとした手土産にも。",
+      "彩りバターサンドやストロープワッフルなど、店内で仕上げるオリジナルスイーツ。おやつの時間にも、手土産にも。",
     lineupNote:
       "季節限定のフレーバーもご用意しています。最新のスイーツは公式Instagramでご紹介しています。",
+    comingSoon: ["生プリン", "バスクチーズケーキ"],
   },
   {
     id: "drinks",
@@ -91,142 +124,211 @@ export const menuCategories: MenuCategory[] = [
     nameEn: "Drinks",
     description:
       "レモネードを中心に、フードやスイーツと合わせて楽しめるドリンクをご用意しています。",
-    lineupNote:
-      "フレーバーは季節により変わります。おすすめドリンクは公式Instagramのハイライトでご紹介しています。",
+    lineupNote: "フレーバーは季節により変わります。",
   },
 ];
 
 export const menuItems: MenuItem[] = [
-  // ---------------- バインミー ----------------
+  // ---------------- ランチセット ----------------
   {
+    id: "lunch-set",
+    name: "ランチセット（デザート＆ドリンク付き）",
+    nameEn: "Lunch Set with Dessert & Drink",
+    description:
+      "メインの一皿に、デザートとドリンクを添えて。お昼のひとときを、ゆっくり楽しみたい日にどうぞ。",
+    kind: "regular",
+    price: 1500,
+    priceNote: "〜",
+    category: "lunch",
+    image: "/images/food/banh-mi-shrimp-plate.jpg",
+    isTakeout: false,
+    isAvailable: true,
+    allergenNote: null,
+  },
+
+  // ---------------- アジアンフード ----------------
+  {
+    id: "banhmi-shrimp-avocado",
     name: "バインミー 海老とアボカド",
     nameEn: "Banh Mi — Shrimp & Avocado",
     description:
       "ぷりっとした海老とアボカド、パクチーを重ねた一本。軽い食感のパンと、みずみずしい具材の相性を楽しめます。",
-    price: null,
-    category: "banhmi",
+    kind: "regular",
+    price: 720,
+    priceNote: "〜",
+    category: "asian",
     image: "/images/food/banh-mi-shrimp-avocado.jpg",
     isTakeout: true,
     isAvailable: true,
     allergenNote: null,
   },
   {
+    id: "banhmi-chicken-avocado",
     name: "バインミー チキンとアボカド",
     nameEn: "Banh Mi — Chicken & Avocado",
     description:
       "しっとりとしたチキンに、アボカドとたっぷりの香草を合わせて。片手で食べられる、食べごたえのある一本です。",
-    price: null,
-    category: "banhmi",
+    kind: "regular",
+    price: 720,
+    priceNote: "〜",
+    category: "asian",
     image: "/images/food/banh-mi-chicken-avocado.jpg",
     isTakeout: true,
     isAvailable: true,
     allergenNote: null,
   },
   {
+    id: "banhmi-creamy",
     name: "バインミー クリーミーフィリング",
     nameEn: "Banh Mi — Creamy",
     description:
-      "まろやかなフィリングをたっぷりと。やさしい味わいで、東南アジアの料理がはじめての方にもおすすめです。",
-    price: null,
-    category: "banhmi",
+      "まろやかなフィリングをたっぷりと。やさしい味わいで、アジアの料理がはじめての方にもおすすめです。",
+    kind: "regular",
+    price: 720,
+    priceNote: "〜",
+    category: "asian",
     image: "/images/food/banh-mi-creamy.jpg",
     isTakeout: true,
     isAvailable: true,
     allergenNote: null,
   },
-
-  // ---------------- フード ----------------
   {
+    id: "gapao-rice",
     name: "ガパオライス",
     nameEn: "Gapao Rice",
     description:
-      "香りとスパイスが重なるオリエンタルな一皿。とろりとした目玉焼きをくずしながらお召し上がりください。",
-    price: null,
-    category: "food",
-    image: "/images/food/gapao-rice-set.jpg",
+      "香りとスパイスが重なるタイの一皿。とろりとした目玉焼きをくずしながらお召し上がりください。",
+    kind: "regular",
+    price: 780,
+    category: "asian",
+    image: "/images/food/gapao-rice.jpg",
     isTakeout: true,
     isAvailable: true,
     allergenNote: null,
   },
   {
-    name: "春雨サラダ",
-    nameEn: "Glass Noodle Salad",
+    id: "green-curry",
+    name: "グリーンカレー",
+    nameEn: "Green Curry",
     description:
-      "海老と香草、紫玉ねぎを合わせた、酸味と辛みが心地よいサラダ。フードのお供にもぴったりです。",
+      "ココナッツミルクのまろやかさに、ハーブの香りと心地よい辛さ。バジルを添えた、タイの定番カレーです。",
+    kind: "regular",
     price: null,
-    category: "food",
+    category: "asian",
+    image: "/images/food/green-curry.jpg",
+    isTakeout: true,
+    isAvailable: true,
+    allergenNote: null,
+  },
+  {
+    id: "yam-woon-sen",
+    name: "ヤムウンセン",
+    nameEn: "Yum Woon Sen",
+    description:
+      "海老と香草、紫玉ねぎを合わせたタイ風の春雨サラダ。酸味と辛みが心地よく、フードのお供にもぴったりです。",
+    kind: "regular",
+    price: 780,
+    category: "asian",
     image: "/images/food/yam-woon-sen.jpg",
     isTakeout: true,
     isAvailable: true,
     allergenNote: null,
   },
+
+  // ---------------- お肉・お魚料理 ----------------
   {
-    name: "海鮮丼",
-    nameEn: "Kaisen Don",
+    id: "roast-beef",
+    name: "黒毛和牛ローストビーフ",
+    nameEn: "Wagyu Roast Beef",
     description:
-      "魚屋さんから届く新鮮な魚を使った一杯。彩りよく盛り付けた、贅沢な海の丼です。",
+      "黒毛和牛の塊肉に焼き色をつけ、しっとりと火を入れて。ご自宅の食卓の主役にも、おもてなしにも。",
+    kind: "regular",
     price: null,
-    category: "food",
-    image: "/images/food/salmon-poke-bowl.jpg",
+    category: "meatfish",
+    image: "/images/delica/roast-beef-slices.jpg",
     isTakeout: true,
     isAvailable: true,
     allergenNote: null,
   },
   {
-    name: "西京焼き",
-    nameEn: "Saikyo-yaki",
-    description:
-      "西京味噌に漬け込んだ魚を、ふっくらと焼き上げて。ごはんにもお酒にも寄り添う一品です。",
-    price: null,
-    category: "food",
-    image: "/images/food/saikyo-yaki.jpg",
-    isTakeout: true,
-    isAvailable: true,
-    allergenNote: null,
-  },
-  {
+    id: "roast-beef-don",
     name: "ローストビーフ丼",
     nameEn: "Roast Beef Don",
     description:
-      "低温調理でしっとりと仕上げたローストビーフを、たっぷりと盛って。彩り野菜と一緒にどうぞ。",
+      "しっとりと仕上げたローストビーフを、ごはんの上にたっぷりと。満足感のある一杯です。",
+    kind: "regular",
     price: null,
-    category: "food",
+    category: "meatfish",
     image: "/images/food/roast-beef-don.jpg",
     isTakeout: true,
     isAvailable: true,
     allergenNote: null,
   },
   {
+    id: "saikyo-yaki",
+    name: "西京焼き",
+    nameEn: "Saikyo-yaki",
+    description:
+      "店内で西京味噌に漬け込んだ魚を、ふっくらと焼き上げて。ごはんにもお酒にも寄り添う一品です。",
+    kind: "variable",
+    price: null,
+    category: "meatfish",
+    image: "/images/food/saikyo-yaki.jpg",
+    isTakeout: true,
+    isAvailable: true,
+    allergenNote: null,
+  },
+  {
+    id: "loco-moco",
     name: "ロコモコ",
     nameEn: "Loco Moco",
     description:
-      "肉汁あふれるハンバーグに、半熟卵とソースをたっぷりと。満足感のあるワンプレートです。",
-    price: null,
-    category: "food",
+      "ハンバーグに半熟卵とソースをたっぷりと。彩り野菜と一緒に楽しむ、満足感のあるワンプレートです。",
+    kind: "regular",
+    price: 850,
+    category: "meatfish",
     image: "/images/food/loco-moco.jpg",
     isTakeout: true,
     isAvailable: true,
     allergenNote: null,
   },
   {
+    id: "kaisen-don",
+    name: "海鮮丼",
+    nameEn: "Kaisen Don",
+    description:
+      "魚屋さんから届く新鮮な魚を使った一杯。彩りよく盛り付けた、贅沢な海の丼です。",
+    kind: "variable",
+    price: null,
+    category: "meatfish",
+    image: "/images/food/kaisen-don.jpg",
+    isTakeout: true,
+    isAvailable: true,
+    allergenNote: null,
+  },
+  {
+    id: "chicken-wings",
     name: "鶏手羽先",
     nameEn: "Chicken Wings",
     description:
-      "香ばしく焼き上げた手羽先。もう一品欲しいときや、おやつがわりのつまみにも。",
+      "香ばしく焼き上げた手羽先。もう一品欲しいときや、おつまみにも。",
+    kind: "regular",
     price: null,
-    category: "food",
-    image: "/images/food/chicken-wings.jpg",
+    category: "meatfish",
+    image: "/images/food/chicken-wings-plain.jpg",
     isTakeout: true,
     isAvailable: true,
     allergenNote: null,
   },
 
-  // ---------------- デリカ・お惣菜 ----------------
+  // ---------------- デリカ・お弁当 ----------------
   {
-    name: "彩り弁当",
-    nameEn: "Bento",
+    id: "bento",
+    name: "日替わり弁当",
+    nameEn: "Daily Bento",
     description:
-      "焼き魚やローストビーフ、卵焼きなどを彩りよく詰め合わせて。ひと箱で満たされるお弁当です。",
+      "焼き魚やハンバーグ、ローストビーフなどを彩りよく詰め合わせて。ひと箱で満たされるお弁当です。",
+    kind: "variable",
     price: null,
     category: "delica",
     image: "/images/delica/bento-mixed.jpg",
@@ -235,10 +337,12 @@ export const menuItems: MenuItem[] = [
     allergenNote: null,
   },
   {
+    id: "unagi-bento",
     name: "うなぎ弁当",
     nameEn: "Unagi Bento",
     description:
       "ふっくらとしたうなぎに、ローストビーフと卵焼きを添えて。特別な日のお昼にもどうぞ。",
+    kind: "variable",
     price: null,
     category: "delica",
     image: "/images/delica/bento-unagi.jpg",
@@ -247,22 +351,12 @@ export const menuItems: MenuItem[] = [
     allergenNote: null,
   },
   {
-    name: "ローストビーフ",
-    nameEn: "Roast Beef",
-    description:
-      "低温調理でじっくり火を入れた、しっとり柔らかなローストビーフ。ご自宅の食卓の主役に。",
-    price: null,
-    category: "delica",
-    image: "/images/delica/roast-beef-slices.jpg",
-    isTakeout: true,
-    isAvailable: true,
-    allergenNote: null,
-  },
-  {
+    id: "party-platter",
     name: "オードブル盛り合わせ",
     nameEn: "Party Platter",
     description:
       "ローストビーフやハンバーグ、サラダなどを一皿に。集まりの席やお祝いごとに。",
+    kind: "variable",
     price: null,
     category: "delica",
     image: "/images/delica/party-platter.jpg",
@@ -273,34 +367,56 @@ export const menuItems: MenuItem[] = [
 
   // ---------------- スイーツ ----------------
   {
+    id: "butter-sandwich",
+    name: "彩りバターサンド",
+    nameEn: "Colorful Butter Sandwich",
+    description:
+      "色とりどりの生地に、なめらかなバタークリームをひとつずつ絞ってサンド。並んだ姿も楽しい、K-labo自慢のスイーツです。",
+    kind: "regular",
+    price: 350,
+    category: "sweets",
+    image: "/images/sweets/butter-sandwich.jpg",
+    isTakeout: true,
+    isAvailable: true,
+    allergenNote: null,
+  },
+  {
+    id: "butter-sandwich-gift",
+    name: "彩りバターサンド ギフトボックス",
+    nameEn: "Butter Sandwich Gift Box",
+    description:
+      "個包装の彩りバターサンドを詰め合わせて。手土産やちょっとした贈りものにお選びいただけます。",
+    kind: "regular",
+    price: 2500,
+    priceNote: "〜",
+    category: "sweets",
+    image: "/images/sweets/butter-sandwich-gift-box.jpg",
+    isTakeout: true,
+    isAvailable: true,
+    allergenNote: null,
+  },
+  {
+    id: "stroopwafel",
     name: "ストロープワッフル",
     nameEn: "Stroopwafel",
     description:
-      "薄く焼いたワッフル生地に、チョコレートやナッツを重ねて。ざくっとした食感が楽しい看板スイーツです。",
-    price: null,
+      "薄く焼いたワッフル生地に、チョコレートやナッツを重ねて。ざくっとした食感が楽しいスイーツです。",
+    kind: "regular",
+    price: 450,
+    priceNote: "〜",
     category: "sweets",
-    image: "/images/sweets/stroopwafel-chocolate.jpg",
+    image: "/images/sweets/stroopwafel-nuts.jpg",
     isTakeout: true,
     isAvailable: true,
     allergenNote: null,
   },
   {
-    name: "サンドクッキー",
-    nameEn: "Sandwich Cookies",
-    description:
-      "やさしい色合いのクッキーで、なめらかなクリームをサンドして。並んだ姿もかわいらしい一品です。",
-    price: null,
-    category: "sweets",
-    image: "/images/sweets/sandwich-cookies-stack.jpg",
-    isTakeout: true,
-    isAvailable: true,
-    allergenNote: null,
-  },
-  {
+    id: "wafer-cookies",
     name: "ウエハースクッキー",
     nameEn: "Wafer Cookies",
     description:
       "軽やかなウエハースに、ホワイトとビターのチョコレートをまとわせて。ひと口サイズの贈りものにも。",
+    kind: "regular",
     price: null,
     category: "sweets",
     image: "/images/sweets/wafer-sticks.jpg",
@@ -308,26 +424,17 @@ export const menuItems: MenuItem[] = [
     isAvailable: true,
     allergenNote: null,
   },
-  {
-    name: "クッキーギフトボックス",
-    nameEn: "Cookie Gift Box",
-    description:
-      "個包装のクッキーを詰め合わせて。手土産やちょっとした贈りものにお選びいただけます。",
-    price: null,
-    category: "sweets",
-    image: "/images/sweets/cookie-gift-box.jpg",
-    isTakeout: true,
-    isAvailable: true,
-    allergenNote: null,
-  },
 
   // ---------------- ドリンク ----------------
   {
+    id: "purple-lemonade",
     name: "パープルレモネード",
     nameEn: "Purple Lemonade",
     description:
       "澄んだ紫色が目を引く一杯。ミントを添えて、見た目にも涼やかに仕上げました。",
-    price: null,
+    kind: "regular",
+    price: 480,
+    priceNote: "〜",
     category: "drinks",
     image: "/images/drinks/butterfly-pea-soda.jpg",
     isTakeout: true,
@@ -335,11 +442,14 @@ export const menuItems: MenuItem[] = [
     allergenNote: null,
   },
   {
+    id: "citrus-lemonade",
     name: "シトラスレモネード",
     nameEn: "Citrus Lemonade",
     description:
       "柑橘のほろ苦さと甘酸っぱさが広がる、鮮やかなオレンジ色のレモネードです。",
-    price: null,
+    kind: "regular",
+    price: 480,
+    priceNote: "〜",
     category: "drinks",
     image: "/images/drinks/citrus-soda.jpg",
     isTakeout: true,
@@ -347,11 +457,14 @@ export const menuItems: MenuItem[] = [
     allergenNote: null,
   },
   {
+    id: "lemon-mint",
     name: "レモン & ミント",
     nameEn: "Lemon & Mint",
     description:
       "レモンの酸味にミントの香りを添えて。フードの後味をすっきりと整えてくれる一杯。",
-    price: null,
+    kind: "regular",
+    price: 480,
+    priceNote: "〜",
     category: "drinks",
     image: "/images/drinks/lemon-soda.jpg",
     isTakeout: true,
@@ -359,11 +472,14 @@ export const menuItems: MenuItem[] = [
     allergenNote: null,
   },
   {
-    name: "アイスコーヒー",
-    nameEn: "Iced Coffee",
+    id: "coffee",
+    name: "挽き立てコーヒー",
+    nameEn: "Freshly Ground Coffee",
     description:
-      "K-laboのロゴを添えたカップで。バインミーやスイーツのお供に、そのまま持ち歩ける一杯です。",
-    price: null,
+      "一杯ずつ挽き立ての豆で。バインミーやスイーツのお供に、テイクアウトでも楽しめます。",
+    kind: "regular",
+    price: 420,
+    priceNote: "〜",
     category: "drinks",
     image: "/images/drinks/iced-coffee.jpg",
     isTakeout: true,
@@ -372,10 +488,33 @@ export const menuItems: MenuItem[] = [
   },
 ];
 
-/** カテゴリIDから所属商品を取得 */
-export function getItemsByCategory(id: MenuCategoryId): MenuItem[] {
-  return menuItems.filter((item) => item.category === id);
-}
+/** トップページ「代表商品」に並べる商品（id の順に表示） */
+export const signatureItemIds = [
+  "banhmi-shrimp-avocado",
+  "gapao-rice",
+  "roast-beef",
+  "stroopwafel",
+  "butter-sandwich",
+] as const;
 
-/** 価格表示（未確認の場合の共通文言） */
-export const PRICE_UNCONFIRMED = "価格は店頭・Instagramでご確認ください";
+/** 価格が未入力の定番商品に表示する文言 */
+export const PRICE_UNSET = "価格は店頭でご確認ください";
+/** 日替わり・仕入れで変動する商品に表示する文言 */
+export const PRICE_VARIABLE = "日替わり・仕入れにより変動します。Instagramでご確認ください";
+
+/** 価格表示用の文字列を返す */
+export function formatPrice(item: Pick<MenuItem, "kind" | "price" | "priceNote">): {
+  text: string;
+  hasPrice: boolean;
+} {
+  if (item.price !== null) {
+    return {
+      text: `¥${item.price.toLocaleString("ja-JP")}${item.priceNote ?? ""}（税込）`,
+      hasPrice: true,
+    };
+  }
+  return {
+    text: item.kind === "variable" ? PRICE_VARIABLE : PRICE_UNSET,
+    hasPrice: false,
+  };
+}

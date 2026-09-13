@@ -6,18 +6,20 @@ import SectionHeading from "@/components/ui/SectionHeading";
 import LinkButton from "@/components/ui/LinkButton";
 import JsonLd from "@/components/ui/JsonLd";
 import { PhoneIcon } from "@/components/ui/icons";
+import QuickActions from "@/components/sections/shared/QuickActions";
+import ReserveBlock from "@/components/sections/shared/ReserveBlock";
 import { faqJsonLd } from "@/lib/jsonld";
-import { siteConfig } from "@/data/siteConfig";
+import { getParkingInfo, siteConfig } from "@/data/siteConfig";
 
 export const metadata: Metadata = {
   title: "テイクアウトのご案内｜紫駅すぐの持ち帰りグルメ",
   description:
-    "筑紫野市でテイクアウトなら、紫駅東口から徒歩約0分のK-labo。バインミーやお惣菜、スイーツを持ち帰りで楽しめます。注文から受け取りまでの流れと、当日メニューの確認方法をご案内します。",
+    "筑紫野市でテイクアウトなら、紫駅東口から徒歩約0分のK-labo。バインミーや黒毛和牛ローストビーフ、お弁当、彩りバターサンドを持ち帰りで。Uber Eats・ロケットナウのデリバリー、お電話・Instagramでのご予約・お取り置きにも対応しています。",
   alternates: { canonical: "/takeout" },
   openGraph: {
     title: "テイクアウトのご案内｜K-labo｜筑紫野・紫駅すぐ",
     description:
-      "バインミー・お惣菜・スイーツを持ち帰りで。筑紫野市・紫駅東口すぐのテイクアウト＆カフェ K-laboのテイクアウト案内です。",
+      "バインミー・ローストビーフ・お弁当・スイーツを持ち帰りで。デリバリーやご予約・お取り置きにも対応。筑紫野市・紫駅東口すぐのK-laboのテイクアウト案内です。",
     url: "/takeout",
     images: [{ url: "/opengraph-image", width: 1200, height: 630 }],
   },
@@ -27,12 +29,12 @@ const steps = [
   {
     number: "01",
     title: "当日のメニューを確かめる",
-    text: "その日のラインナップは、公式Instagramのストーリーズ・投稿でご紹介しています。もちろん、店頭で選んでいただくのも歓迎です。",
+    text: "定番メニューと価格はメニューページでご覧いただけます。日替わりの品は、公式Instagramのストーリーズ・投稿でご紹介しています。",
   },
   {
     number: "02",
-    title: "店頭でご注文",
-    text: "紫駅東口を出てすぐの店舗にお越しください。ショーケースと当日のメニューから、お好きな品をお選びいただけます。",
+    title: "店頭で、またはご予約で",
+    text: "紫駅東口を出てすぐの店舗でご注文ください。お弁当やオードブルなどは、お電話・InstagramのDMでご予約・お取り置きも承ります。",
   },
   {
     number: "03",
@@ -49,16 +51,16 @@ const items = [
     alt: "皿に盛り付けたK-laboのバインミーとサラダ",
   },
   {
-    name: "デリカ・お惣菜",
-    note: "お肉やお魚のおかず。夕食にもう一品。",
+    name: "お肉・お魚料理、お弁当",
+    note: "黒毛和牛ローストビーフや西京焼き。夕食にもう一品。",
     image: "/images/delica/roast-beef-pack.jpg",
     alt: "ロゴシールを貼った容器に入ったK-laboのローストビーフ",
   },
   {
     name: "スイーツ",
-    note: "おやつや手土産に。かわいらしい手づくりの甘いもの。",
-    image: "/images/sweets/stroopwafel-caramel.jpg",
-    alt: "キャラメルチップとチョコレートをあしらったK-laboのストロープワッフル",
+    note: "彩りバターサンドやストロープワッフル。手土産にも。",
+    image: "/images/sweets/butter-sandwich-gift-box.jpg",
+    alt: "個包装の彩りバターサンドを詰め合わせたK-laboのギフトボックス",
   },
   {
     name: "ドリンク",
@@ -68,11 +70,18 @@ const items = [
   },
 ];
 
+function parkingAnswer() {
+  const parking = getParkingInfo();
+  return parking.confirmed
+    ? `はい。${siteConfig.parking.location}に${siteConfig.parking.fee}の駐車場が${siteConfig.parking.spaces}分ございます。${parking.detail ?? ""}西鉄紫駅の東口を出てすぐの場所にあり、電車でもお越しいただけます。`
+    : `西鉄紫駅の東口を出てすぐの場所にあり、電車でのお越しが便利です。駐車場については、お電話（${siteConfig.phone}）でお問い合わせください。`;
+}
+
 const faqs = [
   {
     question: "テイクアウトはできますか？",
     answer:
-      "はい。K-laboはテイクアウトを中心としたお店です。バインミーなどのフード、お惣菜やお弁当、スイーツ、ドリンクをお持ち帰りいただけます。",
+      "はい。K-laboはテイクアウトを中心としたお店です。バインミーやガパオライス、黒毛和牛ローストビーフ、お弁当、彩りバターサンドなどのスイーツ、ドリンクをお持ち帰りいただけます。",
   },
   {
     question: "営業時間を教えてください。",
@@ -87,12 +96,16 @@ const faqs = [
   {
     question: "デリバリーには対応していますか？",
     answer:
-      "Uber Eatsでのデリバリーに対応しています。最新の対応状況・提供エリアはUber Eatsアプリまたは公式Instagramをご確認ください。",
+      "Uber Eats・ロケットナウでのデリバリーに対応しています。このページの「Uber Eatsで注文」「ロケットナウで注文」ボタンから、各アプリのK-laboの店舗ページへ進めます。配達エリアは各アプリでご確認ください。",
   },
   {
     question: "予約や取り置きはできますか？",
     answer:
-      "ご予約・お取り置きの受付については、お電話（070-8959-5364）または公式Instagramでお問い合わせください。",
+      "はい、承ります。お電話（070-8959-5364）または公式InstagramのDMからご連絡ください。",
+  },
+  {
+    question: "駐車場はありますか？",
+    answer: parkingAnswer(),
   },
 ];
 
@@ -117,6 +130,32 @@ export default function TakeoutPage() {
         }
         breadcrumbs={[{ name: "テイクアウト", path: "/takeout" }]}
       />
+
+      {/* ご注文・デリバリー・ご予約の導線 */}
+      <section
+        aria-labelledby="takeout-actions-heading"
+        className="border-b border-ink/10 bg-paper"
+      >
+        <div className="mx-auto grid w-full max-w-6xl gap-10 px-5 py-14 sm:px-8 sm:py-20 lg:grid-cols-12 lg:gap-10">
+          <div className="flex flex-col gap-4 lg:col-span-5">
+            <h2
+              id="takeout-actions-heading"
+              className="font-mincho text-xl tracking-[0.08em] sm:text-2xl"
+            >
+              ご注文・デリバリー・ご予約
+            </h2>
+            <p className="text-[0.82rem] leading-[2.1] text-espresso">
+              店頭でのテイクアウトのほか、{siteConfig.uberEats.name}・{siteConfig.rocketNow.name}のデリバリーにも対応しています。
+            </p>
+            <Reveal delay={0.1} className="mt-4">
+              <ReserveBlock />
+            </Reveal>
+          </div>
+          <Reveal delay={0.1} className="lg:col-span-7">
+            <QuickActions cols="grid-cols-2 md:grid-cols-3 lg:grid-cols-2 xl:grid-cols-3" />
+          </Reveal>
+        </div>
+      </section>
 
       {/* テイクアウトできるもの */}
       <section
@@ -154,7 +193,7 @@ export default function TakeoutPage() {
         </ul>
         <Reveal delay={0.1} className="mt-6">
           <p className="text-[0.75rem] leading-[2] text-olive-deep">
-            内容は日替わり・季節替わりです。当日のラインナップは店頭・公式Instagramでご確認ください。
+            定番メニューの価格はメニューページに掲載しています。日替わりの品は店頭・公式Instagramでご確認ください。
           </p>
         </Reveal>
       </section>
@@ -244,11 +283,12 @@ export default function TakeoutPage() {
                 Delivery
               </p>
               <h3 className="font-mincho text-xl tracking-[0.1em]">
-                Uber Eatsにも対応
+                Uber Eats・ロケットナウに対応
               </h3>
               <p className="text-[0.8rem] leading-[2.2] text-ivory/75">
-                ご自宅からのご注文には、Uber Eatsでのデリバリーもご利用いただけます。最新の対応状況・提供エリアは、Uber Eatsアプリまたは公式Instagramをご確認ください。
+                ご自宅や職場からのご注文には、デリバリーもご利用いただけます。配達エリアは各アプリでご確認ください。
               </p>
+              <QuickActions actions={["uberEats", "rocketNow"]} dark cols="grid-cols-1 sm:grid-cols-2 md:grid-cols-1" className="mt-2" />
             </div>
           </Reveal>
         </div>
@@ -294,9 +334,7 @@ export default function TakeoutPage() {
             ))}
           </dl>
           <Reveal delay={0.2} className="mt-12 flex justify-center">
-            <LinkButton href={siteConfig.instagram.url} external>
-              Instagramで当日のメニューを見る
-            </LinkButton>
+            <LinkButton href="/menu">メニューと価格を見る</LinkButton>
           </Reveal>
         </div>
       </section>

@@ -17,11 +17,17 @@ export const siteConfig = {
   /** 公式ロゴに記されたブランドタグライン */
   brandTagline: "for your bliss...",
 
-  /** ブランドメッセージ */
-  tagline: "バンコクで出会ったおいしさを、筑紫野の日常へ。",
-  /** サブコピー */
+  /**
+   * ブランドメッセージ（トップページのメインコピー）
+   * 「アジア料理専門店」に限定せず、アジアを原点に日々のおいしいものを
+   * つくる店であることを伝える。改行位置は Hero.tsx 側で調整している。
+   */
+  tagline: "アジアで出会ったおいしさを、日常の一皿へ…",
+  /** サブコピー（トップページ・フッター・構造化データの説明文に使用） */
   subTagline:
-    "家族で過ごした9年間の記憶から生まれた、東南アジア料理とスイーツのテイクアウト＆カフェ。",
+    "K-laboの原点は、家族で暮らしたバンコクでの9年間の記憶。東南アジア料理や、お肉・お魚の料理、オリジナルスイーツを楽しめるカフェ＆テイクアウトショップです。",
+  /** 業態の短い説明（フッター等） */
+  shopType: "アジアを原点にした、カフェ＆テイクアウトショップ",
 
   /**
    * 本番URL（独自ドメイン）
@@ -90,12 +96,42 @@ export const siteConfig = {
   },
 
   /**
-   * Uber Eats — 公式Instagramのハイライトに「Uber Eats」あり。
-   * 店舗ページURLは未確認のため空欄。
+   * デリバリー（確認済み）
+   * url にアプリの店舗ページURLを入れると「〇〇で注文」ボタンがリンクになる。
+   * 空欄にすると「アプリで『K-labo』と検索」という案内に切り替わる。
    */
   uberEats: {
+    name: "Uber Eats",
     available: true,
-    url: "", // 未確認
+    url: "https://www.ubereats.com/store-browse-uuid/6672ae13-41d7-4fd0-ad91-4ee5125bd2f6?diningMode=DELIVERY",
+  },
+  rocketNow: {
+    name: "ロケットナウ",
+    available: true,
+    url: "https://customer-web.rocketnow.co.jp/share?storeId=104572&dishId&key=473b2a06-b1f1-4d45-a8f4-6fcdd70b309a",
+  },
+
+  /** 予約・取り置き（お電話・Instagramで受付） */
+  reservation: {
+    available: true,
+    message: "お電話・Instagramから、ご予約・お取り置きも承ります。",
+  },
+
+  /**
+   * 駐車場（確認済み）
+   * spaces / location を空欄にすると「お電話でお問い合わせください」と表示する。
+   */
+  parking: {
+    /** 台数 */
+    spaces: "3台",
+    /** 場所 */
+    location: "店舗前",
+    /** 料金 */
+    fee: "無料",
+    /** 補足（例: "満車の際は近隣のコインパーキングをご利用ください"） */
+    note: "",
+    /** 駐車場の写真（/public 基準。任意） */
+    image: null as string | null,
   },
 
   /**
@@ -110,6 +146,9 @@ export const siteConfig = {
   googleMapsUrl:
     "https://www.google.com/maps/search/?api=1&query=" +
     encodeURIComponent("K-labo 福岡県筑紫野市紫2-1-5"),
+
+  /** Instagram のDM画面を直接開くURL */
+  instagramDmUrl: "https://ig.me/m/klaboskic",
 
   /** Googleマップ埋め込み用URL */
   mapEmbedUrl:
@@ -135,7 +174,15 @@ export const siteConfig = {
   },
 
   /** 構造化データ用: 提供ジャンル */
-  servesCuisine: ["ベトナム料理", "タイ料理", "東南アジア料理", "カフェ"],
+  servesCuisine: [
+    "アジア料理",
+    "タイ料理",
+    "ベトナム料理",
+    "ローストビーフ",
+    "西京焼き",
+    "スイーツ",
+    "カフェ",
+  ],
 
   /** 構造化データ用: 対応エリア（筑紫野市周辺） */
   areaServed: ["筑紫野市", "太宰府市", "大野城市", "小郡市", "那珂川市"],
@@ -152,3 +199,25 @@ export const navigation = [
 
 /** 未確認情報の共通案内文 */
 export const CONFIRM_ON_INSTAGRAM = "最新情報は公式Instagramをご確認ください。";
+
+/**
+ * 駐車場の案内文
+ * siteConfig.parking に場所・台数が入っていればそれを、
+ * 未入力の間は問い合わせを促す文言を返す。
+ */
+export function getParkingInfo(): { summary: string; detail: string | null; confirmed: boolean } {
+  const { spaces, location, fee, note } = siteConfig.parking;
+  if (!spaces && !location) {
+    return {
+      summary: "駐車場のご案内は準備中です",
+      detail: "お車でお越しの際は、お電話でお問い合わせください。",
+      confirmed: false,
+    };
+  }
+  return {
+    // 例: 「店舗前に3台（無料）」
+    summary: `${location ? `${location}に` : ""}${spaces}${fee ? `（${fee}）` : ""}`,
+    detail: note || null,
+    confirmed: true,
+  };
+}
