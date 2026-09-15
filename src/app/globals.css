@@ -176,6 +176,31 @@ body {
 }
 
 /* ================================================================
+   Marquee — 流れ続ける写真の帯（PhotoMarquee.tsx）
+   同じ列を2つ並べて -50% まで動かすことで継ぎ目なくループさせる。
+================================================================ */
+
+@keyframes marquee-scroll {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+.marquee-track {
+  animation: marquee-scroll var(--marquee-duration, 60s) linear infinite;
+  will-change: transform;
+}
+
+.marquee:hover .marquee-track,
+.marquee:focus-within .marquee-track,
+.marquee[data-paused="true"] .marquee-track {
+  animation-play-state: paused;
+}
+
+/* ================================================================
    Reduced motion
 ================================================================ */
 
@@ -191,7 +216,8 @@ body {
     animation: none !important;
   }
 
-  .scroll-cue-bar {
+  .scroll-cue-bar,
+  .marquee-track {
     animation: none !important;
     transform: none !important;
   }
