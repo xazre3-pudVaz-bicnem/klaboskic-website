@@ -194,12 +194,6 @@ body {
   will-change: transform;
 }
 
-.marquee:hover .marquee-track,
-.marquee:focus-within .marquee-track,
-.marquee[data-paused="true"] .marquee-track {
-  animation-play-state: paused;
-}
-
 /* ================================================================
    Reduced motion
 ================================================================ */

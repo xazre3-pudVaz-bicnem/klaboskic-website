@@ -1,8 +1,5 @@
-"use client";
-
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
 
 type Photo = {
   src: string;
@@ -72,18 +69,14 @@ function PhotoCard({ photo, hidden }: { photo: Photo; hidden: boolean }) {
  *
  * 同じ写真の列を2つ並べ、列全体を -50% まで一定速度で動かし続けることで
  * 継ぎ目なくループさせる。アニメーションはCSSのみ（globals.css の .marquee）。
- * - マウスを乗せる／キーボードでフォーカスすると一時停止
- * - 一時停止ボタン付き（自動で動き続ける要素には停止手段が必要）
- * - 「視差効果を減らす」設定の端末では動かさず、指で横スクロールできる
+ * カーソルを合わせても止めず、常に流れ続ける。
+ * 「視差効果を減らす」設定の端末では動かさず、指で横スクロールできる。
  */
 export default function PhotoMarquee() {
-  const [paused, setPaused] = useState(false);
-
   return (
     <section aria-label="K-laboの料理とお店の写真" className="grain bg-ink pb-8 pt-10 sm:pb-10 sm:pt-14">
       <div
         className="marquee overflow-hidden motion-reduce:overflow-x-auto"
-        data-paused={paused ? "true" : undefined}
         style={{ "--marquee-duration": `${photos.length * SECONDS_PER_PHOTO}s` } as React.CSSProperties}
       >
         <div className="marquee-track flex w-max">
@@ -101,26 +94,10 @@ export default function PhotoMarquee() {
         </div>
       </div>
 
-      <div className="mx-auto mt-5 flex w-full max-w-6xl items-center justify-between gap-4 px-5 sm:px-8">
+      <div className="mx-auto mt-5 w-full max-w-6xl px-5 sm:px-8">
         <p className="font-serif-en text-[0.62rem] uppercase tracking-[0.3em] text-gold">
           Good Food, Good Days
         </p>
-        <button
-          type="button"
-          onClick={() => setPaused((value) => !value)}
-          className="inline-flex min-h-11 items-center gap-2 px-1 text-[0.7rem] tracking-[0.12em] text-ivory/70 transition-colors hover:text-ivory motion-reduce:hidden"
-        >
-          {paused ? (
-            <svg viewBox="0 0 24 24" aria-hidden="true" className="h-3.5 w-3.5 fill-current">
-              <path d="M7 5l12 7-12 7z" />
-            </svg>
-          ) : (
-            <svg viewBox="0 0 24 24" aria-hidden="true" className="h-3.5 w-3.5 fill-current">
-              <path d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z" />
-            </svg>
-          )}
-          {paused ? "写真を動かす" : "一時停止"}
-        </button>
       </div>
     </section>
   );
