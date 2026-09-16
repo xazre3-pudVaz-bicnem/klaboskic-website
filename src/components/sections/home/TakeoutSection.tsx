@@ -20,7 +20,7 @@ export default function TakeoutSection() {
             label="Takeout & Delivery"
             title={
               <span id="takeout-heading">
-                持ち帰りも、
+                テイクアウトも、
                 <br />
                 デリバリーも。
               </span>
@@ -28,8 +28,8 @@ export default function TakeoutSection() {
           />
           <Reveal delay={0.1} className="text-sm leading-[2.2] text-espresso">
             <p>
-              駅前で受け取れるテイクアウトはもちろん、{siteConfig.uberEats.name}・{siteConfig.rocketNow.name}
-              でのデリバリーにも対応。お弁当やオードブルのご予約もどうぞ。
+              店内でのテイクアウトはもちろん、{siteConfig.uberEats.name}・{siteConfig.rocketNow.name}
+              でのデリバリーにも対応。お弁当やオードブルのご予約を承っております。
             </p>
           </Reveal>
           <Reveal delay={0.15} className="hidden md:block">

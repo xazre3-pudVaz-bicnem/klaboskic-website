@@ -15,31 +15,31 @@ const presentation: Record<
 > = {
   "banhmi-shrimp-avocado": {
     tag: "アジアン",
-    catch: "軽やかなパンに、海老とアボカド。K-laboのはじまりの味。",
+    catch: "こだわりのバゲットに、自家製なますを合わせた人気のひと品。",
     image: "/images/food/banh-mi-shrimp.jpg",
     alt: "海老とアボカド、パクチーをはさんだK-laboのバインミー",
   },
   "gapao-rice": {
     tag: "アジアン",
-    catch: "バジルが香る、タイの定番ごはん。",
+    catch: "バジルが香る、旨辛なタイの定番ごはん。",
     image: "/images/food/gapao-rice.jpg",
     alt: "目玉焼きをのせたK-laboのガパオライス",
   },
   "roast-beef": {
     tag: "お肉料理",
-    catch: "黒毛和牛を、しっとりやわらかく。",
+    catch: "厳選した黒毛和牛を低温で丁寧に火入れし、しっとりと仕上げました。",
     image: "/images/delica/roast-beef-slices.jpg",
     alt: "ベビーリーフの上に並べたK-laboの黒毛和牛ローストビーフ",
   },
   stroopwafel: {
     tag: "スイーツ",
-    catch: "ざくっと香ばしい、オランダ生まれの焼き菓子。",
+    catch: "ザクッと香ばしい、オランダ生まれの焼き菓子。",
     image: "/images/sweets/stroopwafel-nuts.jpg",
     alt: "ナッツとチョコレートをあしらったK-laboのストロープワッフル",
   },
   "butter-sandwich": {
     tag: "スイーツ",
-    catch: "色とりどりの生地で、バタークリームをサンド。",
+    catch: "7つの素材の色と味を活かした、彩り鮮やかなバターサンドクッキー。",
     image: "/images/sweets/butter-sandwich.jpg",
     alt: "4色の生地でクリームをはさんだK-laboの彩りバターサンド",
   },
@@ -85,16 +85,10 @@ function SignatureCard({
         >
           {view.catch}
         </p>
-        <p
-          className={cn(
-            "mt-auto pt-1 tracking-[0.04em]",
-            price.hasPrice
-              ? "text-sm text-ink"
-              : "text-[0.66rem] leading-[1.7] text-olive-deep sm:text-[0.7rem]",
-          )}
-        >
-          {price.text}
-        </p>
+        {/* 価格未入力の商品は、カードでは案内文を出さず価格だけを見せる */}
+        {price.hasPrice && (
+          <p className="mt-auto pt-1 text-sm tracking-[0.04em] text-ink">{price.text}</p>
+        )}
       </div>
     </Link>
   );
@@ -117,15 +111,15 @@ export default async function SignatureSection() {
             label="Signature"
             title={
               <span id="signature-heading">
-                アジアの味から、
-                <br className="sm:hidden" />
-                スイーツまで
+                世界の味を集めた
+                <br />
+                多彩なラインナップ
               </span>
             }
           />
           <Reveal delay={0.1}>
             <p className="max-w-sm text-[0.84rem] leading-[2.1] text-espresso">
-              バインミーやガパオに、黒毛和牛のローストビーフ、手づくりのスイーツ。ジャンルにとらわれない、K-laboの代表的な味です。
+              ジャンルの枠を越えて、K-laboならではの美味しさをお届けします。
             </p>
           </Reveal>
         </div>
@@ -147,7 +141,7 @@ export default async function SignatureSection() {
 
         <Reveal delay={0.1} className="mt-14 flex flex-col items-start gap-5 sm:flex-row sm:items-center sm:justify-between">
           <p className="text-[0.75rem] leading-[1.9] text-olive-deep">
-            ほかにも、デザート＆ドリンク付きのランチセットや、ヤムウンセン、ロコモコ、西京焼き、お弁当などをご用意しています。
+            ほかにも、サラダ・デザート・ドリンク付きのランチセットや、ヤムウンセン、ロコモコ、西京焼き、お弁当などをご用意しています。
           </p>
           <LinkButton href="/menu">メニューと価格を見る</LinkButton>
         </Reveal>

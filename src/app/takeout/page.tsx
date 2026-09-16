@@ -28,31 +28,31 @@ export const metadata: Metadata = {
 const steps = [
   {
     number: "01",
-    title: "当日のメニューを確かめる",
+    title: "当日のメニューを確認。",
     text: "定番メニューと価格はメニューページでご覧いただけます。日替わりの品は、公式Instagramのストーリーズ・投稿でご紹介しています。",
   },
   {
     number: "02",
-    title: "店頭で、またはご予約で",
+    title: "店頭、または電話にてご予約を。",
     text: "紫駅東口を出てすぐの店舗でご注文ください。お弁当やオードブルなどは、お電話・InstagramのDMでご予約・お取り置きも承ります。",
   },
   {
     number: "03",
-    title: "受け取って、日常へ",
-    text: "袋に提げて、そのまま職場へ、公園へ、家の食卓へ。あたたかいうちに楽しんでいただくのがおすすめです。",
+    title: "品物を受け取り完了。",
+    text: "あたたかいうちに楽しんでいただくのがおすすめです。",
   },
 ];
 
 const items = [
   {
-    name: "バインミー",
-    note: "片手で食べられる、テイクアウトの定番。",
-    image: "/images/food/banh-mi-creamy-plate.jpg",
+    name: "バインミー、ガパオライス、ヤムウンセン、ロコモコ",
+    note: "メニューはすべてテイクアウトできます。",
+    image: "/images/hero/table-set.jpg",
     alt: "皿に盛り付けたK-laboのバインミーとサラダ",
   },
   {
-    name: "お肉・お魚料理、お弁当",
-    note: "黒毛和牛ローストビーフや西京焼き。夕食にもう一品。",
+    name: "肉・魚料理、お弁当",
+    note: "黒毛和牛ローストビーフや西京焼き。夕食のメインディッシュに。",
     image: "/images/delica/roast-beef-pack.jpg",
     alt: "ロゴシールを貼った容器に入ったK-laboのローストビーフ",
   },
@@ -73,7 +73,7 @@ const items = [
 function parkingAnswer() {
   const parking = getParkingInfo();
   return parking.confirmed
-    ? `はい。${siteConfig.parking.location}に${siteConfig.parking.fee}の駐車場が${siteConfig.parking.spaces}分ございます。${parking.detail ?? ""}西鉄紫駅の東口を出てすぐの場所にあり、電車でもお越しいただけます。`
+    ? `はい。${siteConfig.parking.location}に${siteConfig.parking.fee}の駐車場が${siteConfig.parking.spaces}分ございます。${parking.detail ?? ""}西鉄紫駅の東口を出てすぐ、JR二日市駅からも徒歩5分の場所にあり、電車でもお越しいただけます。`
     : `西鉄紫駅の東口を出てすぐの場所にあり、電車でのお越しが便利です。駐車場については、お電話（${siteConfig.phone}）でお問い合わせください。`;
 }
 
@@ -81,7 +81,7 @@ const faqs = [
   {
     question: "テイクアウトはできますか？",
     answer:
-      "はい。K-laboはテイクアウトを中心としたお店です。バインミーやガパオライス、黒毛和牛ローストビーフ、お弁当、彩りバターサンドなどのスイーツ、ドリンクをお持ち帰りいただけます。",
+      "はい。メニューはすべてテイクアウトいただけます。バインミーやガパオライス、ヤムウンセン、ロコモコ、黒毛和牛ローストビーフ、お弁当、彩りバターサンドなどのスイーツ、ドリンクをお持ち帰りいただけます。",
   },
   {
     question: "営業時間を教えてください。",
@@ -91,7 +91,7 @@ const faqs = [
   {
     question: "店内で食べることはできますか？",
     answer:
-      "テイクアウトが中心のお店ですが、カウンター席もご用意しています。お仕事帰りやお買い物のついでにもお立ち寄りいただけます。",
+      "はい。カウンター席をご用意しています。お仕事帰りやお買い物のついでにもお立ち寄りいただけます。",
   },
   {
     question: "デリバリーには対応していますか？",
@@ -117,15 +117,15 @@ export default function TakeoutPage() {
         label="Takeout"
         title={
           <>
-            筑紫野の日常に、
+            あなたに至福のひとときを
             <br />
-            持ち帰るおいしさを
+            お届けします。
           </>
         }
         titleEn="Takeout Guide"
         lede={
           <>
-            K-laboは、紫駅東口から徒歩約0分のテイクアウト＆カフェ。仕事や学校の合間に、家族の食卓に、公園でのひとときに。筑紫野の毎日に寄り添う持ち帰りグルメをご用意しています。
+            K-laboは、紫駅東口から徒歩約0分のカフェ＆テイクアウトShop。仕事や学校の合間に、家族の食卓に、1人時間のひとときに。筑紫野の毎日に寄り添う持ち帰りグルメをご用意しています。
           </>
         }
         breadcrumbs={[{ name: "テイクアウト", path: "/takeout" }]}
@@ -243,7 +243,7 @@ export default function TakeoutPage() {
           <div className="flex flex-col gap-8 md:col-span-6">
             <SectionHeading
               label="Pick Up"
-              title={<span id="takeout-place-heading">受け取りは、紫駅東口すぐ</span>}
+              title={<span id="takeout-place-heading" className="block text-[1.45rem] sm:text-[2rem] md:text-[1.6rem] lg:whitespace-nowrap lg:text-[2.1rem]">受け取りは、紫駅東口すぐ</span>}
             />
             <Reveal delay={0.1} className="flex flex-col gap-4 text-sm leading-[2.2] text-espresso">
               <p>
@@ -252,6 +252,8 @@ export default function TakeoutPage() {
                 {siteConfig.address.full}
                 <br />
                 {siteConfig.access}
+                <br />
+                {siteConfig.accessJr}（{siteConfig.accessJrFromHakata}）
               </p>
               <p className="border-l-2 border-gold pl-5 text-[0.82rem]">
                 月曜日 – 金曜日　11:30 – 18:30
@@ -283,7 +285,9 @@ export default function TakeoutPage() {
                 Delivery
               </p>
               <h3 className="font-mincho text-xl tracking-[0.1em]">
-                Uber Eats・ロケットナウに対応
+                Uber Eats・
+                <br />
+                ロケットナウに対応
               </h3>
               <p className="text-[0.8rem] leading-[2.2] text-ivory/75">
                 ご自宅や職場からのご注文には、デリバリーもご利用いただけます。配達エリアは各アプリでご確認ください。

@@ -44,8 +44,10 @@ export type MenuItem = {
   kind: "regular" | "variable";
   /** 価格（税込・円）。未入力の場合は null */
   price: number | null;
-  /** 価格の補足（例: "〜"、"（2個入り）"） */
+  /** 価格の補足。価格の直後に付く（例: "〜"、"前後〜"） */
   priceNote?: string;
+  /** 数量などの単位。「（税込）」の後ろに付く（例: "（1本）"） */
+  priceUnit?: string;
   /** カテゴリ */
   category: MenuCategoryId;
   /** 商品写真のパス。実写真がない場合は null（プレースホルダー表示） */
@@ -92,7 +94,7 @@ export const menuCategories: MenuCategory[] = [
   },
   {
     id: "meatfish",
-    name: "お肉・お魚料理",
+    name: "肉・魚料理",
     nameEn: "Meat & Fish",
     description:
       "黒毛和牛のローストビーフや、店内で漬け込む西京焼き。素材と向き合いながら、ひと皿ずつ仕上げています。",
@@ -101,21 +103,20 @@ export const menuCategories: MenuCategory[] = [
   },
   {
     id: "delica",
-    name: "デリカ・お弁当",
-    nameEn: "Delica",
+    name: "お弁当・オードブル",
+    nameEn: "Bento & Party Platter",
     description:
-      "お肉やお魚のおかずを詰め合わせたお弁当と、集まりの席に映えるオードブル。今日の食卓に、そのまま並べられます。",
+      "K-labo特製のお弁当と、集まりの席に映えるオードブル。ご予算などのご相談もお気軽にお申し付けください。",
     lineupNote:
-      "お弁当の内容は日替わりです。オードブルのご注文・ご相談は、お電話または公式InstagramのDMへどうぞ。",
+      "オードブルのご注文・ご相談は、お電話または公式InstagramのDMへどうぞ。",
+    comingSoon: ["スポーツ弁当"],
   },
   {
     id: "sweets",
     name: "スイーツ",
     nameEn: "Sweets",
     description:
-      "彩りバターサンドやストロープワッフルなど、店内で仕上げるオリジナルスイーツ。おやつの時間にも、手土産にも。",
-    lineupNote:
-      "季節限定のフレーバーもご用意しています。最新のスイーツは公式Instagramでご紹介しています。",
+      "彩りバターサンドやストロープワッフルなど、K-laboのオリジナルスイーツ。おやつの時間にも、手土産にも。",
     comingSoon: ["生プリン", "バスクチーズケーキ"],
   },
   {
@@ -124,7 +125,8 @@ export const menuCategories: MenuCategory[] = [
     nameEn: "Drinks",
     description:
       "レモネードを中心に、フードやスイーツと合わせて楽しめるドリンクをご用意しています。",
-    lineupNote: "フレーバーは季節により変わります。",
+    lineupNote:
+      "K-laboのレモネードには、すべてナタデココが入っています。レモネードソーダ・ソーダなしからお選びいただけます。",
   },
 ];
 
@@ -135,13 +137,13 @@ export const menuItems: MenuItem[] = [
     name: "ランチセット（デザート＆ドリンク付き）",
     nameEn: "Lunch Set with Dessert & Drink",
     description:
-      "メインの一皿に、デザートとドリンクを添えて。お昼のひとときを、ゆっくり楽しみたい日にどうぞ。",
+      "メインの一皿に、サラダ、デザートとドリンクを添えて。お昼のひとときを、ゆっくり楽しみたい日にどうぞ。",
     kind: "regular",
     price: 1500,
     priceNote: "〜",
     category: "lunch",
-    image: "/images/food/banh-mi-shrimp-plate.jpg",
-    isTakeout: false,
+    image: "/images/food/lunch-set-gapao.jpg",
+    isTakeout: true,
     isAvailable: true,
     allergenNote: null,
   },
@@ -149,10 +151,10 @@ export const menuItems: MenuItem[] = [
   // ---------------- アジアンフード ----------------
   {
     id: "banhmi-shrimp-avocado",
-    name: "バインミー 海老とアボカド",
+    name: "バインミー ～海老アボカド～",
     nameEn: "Banh Mi — Shrimp & Avocado",
     description:
-      "ぷりっとした海老とアボカド、パクチーを重ねた一本。軽い食感のパンと、みずみずしい具材の相性を楽しめます。",
+      "ぷりっとした海老に、まろやかなアボカドが重なって、軽やかなのに満足感のある一本。",
     kind: "regular",
     price: 720,
     priceNote: "〜",
@@ -164,30 +166,30 @@ export const menuItems: MenuItem[] = [
   },
   {
     id: "banhmi-chicken-avocado",
-    name: "バインミー チキンとアボカド",
-    nameEn: "Banh Mi — Chicken & Avocado",
+    name: "バインミー ～ローストチキンとアボカド～",
+    nameEn: "Banh Mi — Roast Chicken & Avocado",
     description:
-      "しっとりとしたチキンに、アボカドとたっぷりの香草を合わせて。片手で食べられる、食べごたえのある一本です。",
+      "しっとりローストしたチキンの旨みとアボカドのコクがじんわり広がる、やさしい口あたりで食べごたえのある一本。",
     kind: "regular",
     price: 720,
     priceNote: "〜",
     category: "asian",
-    image: "/images/food/banh-mi-chicken-avocado.jpg",
+    image: "/images/food/banh-mi-roast-chicken-avocado.jpg",
     isTakeout: true,
     isAvailable: true,
     allergenNote: null,
   },
   {
-    id: "banhmi-creamy",
-    name: "バインミー クリーミーフィリング",
-    nameEn: "Banh Mi — Creamy",
+    id: "banhmi-tuna-avocado",
+    name: "バインミー ～ツナアボカド～",
+    nameEn: "Banh Mi — Tuna & Avocado",
     description:
-      "まろやかなフィリングをたっぷりと。やさしい味わいで、アジアの料理がはじめての方にもおすすめです。",
+      "ツナの旨みとアボカドのなめらかな口当たりが自然に溶け合う、後味すっきりまとまる一本。",
     kind: "regular",
     price: 720,
     priceNote: "〜",
     category: "asian",
-    image: "/images/food/banh-mi-creamy.jpg",
+    image: "/images/food/banh-mi-tuna-avocado.jpg",
     isTakeout: true,
     isAvailable: true,
     allergenNote: null,
@@ -225,7 +227,7 @@ export const menuItems: MenuItem[] = [
     name: "ヤムウンセン",
     nameEn: "Yum Woon Sen",
     description:
-      "海老と香草、紫玉ねぎを合わせたタイ風の春雨サラダ。酸味と辛みが心地よく、フードのお供にもぴったりです。",
+      "海老とパクチー、紫玉ねぎを合わせたタイ風の春雨サラダ。酸味と辛みが心地よく、食卓のサイドメニューにもぴったりです。",
     kind: "regular",
     price: 780,
     category: "asian",
@@ -238,10 +240,10 @@ export const menuItems: MenuItem[] = [
   // ---------------- お肉・お魚料理 ----------------
   {
     id: "roast-beef",
-    name: "黒毛和牛ローストビーフ",
-    nameEn: "Wagyu Roast Beef",
+    name: "黒毛和牛ローストビーフサラダ",
+    nameEn: "Wagyu Roast Beef Salad",
     description:
-      "黒毛和牛の塊肉に焼き色をつけ、しっとりと火を入れて。ご自宅の食卓の主役にも、おもてなしにも。",
+      "厳選した黒毛和牛を低温で、しっとりと火入れして。ご自宅の食卓の主役にも、おもてなしにも。",
     kind: "regular",
     price: null,
     category: "meatfish",
@@ -252,14 +254,14 @@ export const menuItems: MenuItem[] = [
   },
   {
     id: "roast-beef-don",
-    name: "ローストビーフ丼",
-    nameEn: "Roast Beef Don",
+    name: "黒毛和牛ローストビーフ丼",
+    nameEn: "Wagyu Roast Beef Don",
     description:
       "しっとりと仕上げたローストビーフを、ごはんの上にたっぷりと。満足感のある一杯です。",
     kind: "regular",
     price: null,
     category: "meatfish",
-    image: "/images/food/roast-beef-don.jpg",
+    image: "/images/food/wagyu-roast-beef-don.jpg",
     isTakeout: true,
     isAvailable: true,
     allergenNote: null,
@@ -269,7 +271,7 @@ export const menuItems: MenuItem[] = [
     name: "西京焼き",
     nameEn: "Saikyo-yaki",
     description:
-      "店内で西京味噌に漬け込んだ魚を、ふっくらと焼き上げて。ごはんにもお酒にも寄り添う一品です。",
+      "自家製の西京味噌に漬け込んだ魚を、真空パック詰めにして販売しています。ごはんにもお酒にも寄り添う一品です。",
     kind: "variable",
     price: null,
     category: "meatfish",
@@ -283,7 +285,7 @@ export const menuItems: MenuItem[] = [
     name: "ロコモコ",
     nameEn: "Loco Moco",
     description:
-      "ハンバーグに半熟卵とソースをたっぷりと。彩り野菜と一緒に楽しむ、満足感のあるワンプレートです。",
+      "ふっくらハンバーグにオリジナルソースをたっぷりかけ、半熟卵、彩り野菜と一緒に楽しむ、満足感のあるワンプレートです。",
     kind: "regular",
     price: 850,
     category: "meatfish",
@@ -294,10 +296,10 @@ export const menuItems: MenuItem[] = [
   },
   {
     id: "kaisen-don",
-    name: "海鮮丼",
+    name: "至福の海鮮丼",
     nameEn: "Kaisen Don",
     description:
-      "魚屋さんから届く新鮮な魚を使った一杯。彩りよく盛り付けた、贅沢な海の丼です。",
+      "新鮮な魚を彩りよく盛り付けた、贅沢な海の丼です。",
     kind: "variable",
     price: null,
     category: "meatfish",
@@ -307,27 +309,27 @@ export const menuItems: MenuItem[] = [
     allergenNote: null,
   },
   {
-    id: "chicken-wings",
-    name: "鶏手羽先",
-    nameEn: "Chicken Wings",
+    id: "roast-chicken",
+    name: "若鶏ローストチキン",
+    nameEn: "Roast Chicken",
     description:
-      "香ばしく焼き上げた手羽先。もう一品欲しいときや、おつまみにも。",
+      "香ばしく焼き上げた若鶏のローストチキン。もう一品欲しいときや、おつまみにも。",
     kind: "regular",
-    price: null,
+    price: 150,
     category: "meatfish",
-    image: "/images/food/chicken-wings-plain.jpg",
+    image: "/images/food/chicken-wings.jpg",
     isTakeout: true,
     isAvailable: true,
     allergenNote: null,
   },
 
-  // ---------------- デリカ・お弁当 ----------------
+  // ---------------- お弁当・オードブル ----------------
   {
     id: "bento",
-    name: "日替わり弁当",
-    nameEn: "Daily Bento",
+    name: "K-labo特製弁当",
+    nameEn: "K-labo Special Bento",
     description:
-      "焼き魚やハンバーグ、ローストビーフなどを彩りよく詰め合わせて。ひと箱で満たされるお弁当です。",
+      "焼き魚やハンバーグ、ローストビーフなどを彩りよく詰め合わせたお弁当です。",
     kind: "variable",
     price: null,
     category: "delica",
@@ -337,27 +339,14 @@ export const menuItems: MenuItem[] = [
     allergenNote: null,
   },
   {
-    id: "unagi-bento",
-    name: "うなぎ弁当",
-    nameEn: "Unagi Bento",
-    description:
-      "ふっくらとしたうなぎに、ローストビーフと卵焼きを添えて。特別な日のお昼にもどうぞ。",
-    kind: "variable",
-    price: null,
-    category: "delica",
-    image: "/images/delica/bento-unagi.jpg",
-    isTakeout: true,
-    isAvailable: true,
-    allergenNote: null,
-  },
-  {
     id: "party-platter",
     name: "オードブル盛り合わせ",
     nameEn: "Party Platter",
     description:
-      "ローストビーフやハンバーグ、サラダなどを一皿に。集まりの席やお祝いごとに。",
-    kind: "variable",
-    price: null,
+      "ローストビーフやハンバーグ、サラダなどを一皿に。クリスマスパーティーやお花見、歓送迎会など、集まりの席やお祝いごとに。",
+    kind: "regular",
+    price: 5000,
+    priceNote: "前後〜",
     category: "delica",
     image: "/images/delica/party-platter.jpg",
     isTakeout: true,
@@ -371,9 +360,10 @@ export const menuItems: MenuItem[] = [
     name: "彩りバターサンド",
     nameEn: "Colorful Butter Sandwich",
     description:
-      "色とりどりの生地に、なめらかなバタークリームをひとつずつ絞ってサンド。並んだ姿も楽しい、K-labo自慢のスイーツです。",
+      "7つの素材の色と味にこだわった、彩り豊かなバターサンドクッキー。手作りのバタークリームをひとつずつ絞ってサンドしています。季節限定のフレーバーもご用意しています。",
     kind: "regular",
     price: 350,
+    priceUnit: "（1本）",
     category: "sweets",
     image: "/images/sweets/butter-sandwich.jpg",
     isTakeout: true,
@@ -400,7 +390,7 @@ export const menuItems: MenuItem[] = [
     name: "ストロープワッフル",
     nameEn: "Stroopwafel",
     description:
-      "薄く焼いたワッフル生地に、チョコレートやナッツを重ねて。ざくっとした食感が楽しいスイーツです。",
+      "薄く焼いたワッフル生地に、チョコレートやトッピングを重ねて。ザクッとした食感が楽しいスイーツです。",
     kind: "regular",
     price: 450,
     priceNote: "〜",
@@ -410,31 +400,16 @@ export const menuItems: MenuItem[] = [
     isAvailable: true,
     allergenNote: null,
   },
-  {
-    id: "wafer-cookies",
-    name: "ウエハースクッキー",
-    nameEn: "Wafer Cookies",
-    description:
-      "軽やかなウエハースに、ホワイトとビターのチョコレートをまとわせて。ひと口サイズの贈りものにも。",
-    kind: "regular",
-    price: null,
-    category: "sweets",
-    image: "/images/sweets/wafer-sticks.jpg",
-    isTakeout: true,
-    isAvailable: true,
-    allergenNote: null,
-  },
 
   // ---------------- ドリンク ----------------
   {
-    id: "purple-lemonade",
-    name: "パープルレモネード",
-    nameEn: "Purple Lemonade",
+    id: "butterfly-pea-lemonade",
+    name: "バタフライピーレモネード",
+    nameEn: "Butterfly Pea Lemonade",
     description:
-      "澄んだ紫色が目を引く一杯。ミントを添えて、見た目にも涼やかに仕上げました。",
+      "澄んだ青色が目を引く一杯。レモネードを注ぐとふわっと色が変わり、キレイなグラデーションで見た目も楽しいレモネードです。",
     kind: "regular",
-    price: 480,
-    priceNote: "〜",
+    price: 600,
     category: "drinks",
     image: "/images/drinks/butterfly-pea-soda.jpg",
     isTakeout: true,
@@ -442,14 +417,13 @@ export const menuItems: MenuItem[] = [
     allergenNote: null,
   },
   {
-    id: "citrus-lemonade",
-    name: "シトラスレモネード",
-    nameEn: "Citrus Lemonade",
+    id: "mango-lemonade",
+    name: "マンゴーレモネード",
+    nameEn: "Mango Lemonade",
     description:
-      "柑橘のほろ苦さと甘酸っぱさが広がる、鮮やかなオレンジ色のレモネードです。",
+      "南国気分を味わえるマンゴーレモネード。果肉もゴロッと入っていて、ボリューム感たっぷりなレモネードです。",
     kind: "regular",
-    price: 480,
-    priceNote: "〜",
+    price: 600,
     category: "drinks",
     image: "/images/drinks/citrus-soda.jpg",
     isTakeout: true,
@@ -457,13 +431,13 @@ export const menuItems: MenuItem[] = [
     allergenNote: null,
   },
   {
-    id: "lemon-mint",
-    name: "レモン & ミント",
-    nameEn: "Lemon & Mint",
+    id: "white-peach-lemonade",
+    name: "白桃レモネード",
+    nameEn: "White Peach Lemonade",
     description:
-      "レモンの酸味にミントの香りを添えて。フードの後味をすっきりと整えてくれる一杯。",
+      "とろける白桃の甘さに、レモンのきりっとした酸味が重なり、ひと口で季節がほどけるレモネードです。",
     kind: "regular",
-    price: 480,
+    price: 530,
     priceNote: "〜",
     category: "drinks",
     image: "/images/drinks/lemon-soda.jpg",
@@ -473,10 +447,10 @@ export const menuItems: MenuItem[] = [
   },
   {
     id: "coffee",
-    name: "挽き立てコーヒー",
-    nameEn: "Freshly Ground Coffee",
+    name: "挽き立てコーヒー（Hot & Iced）",
+    nameEn: "Freshly Ground Coffee — Hot & Iced",
     description:
-      "一杯ずつ挽き立ての豆で。バインミーやスイーツのお供に、テイクアウトでも楽しめます。",
+      "オーダーが入ってから挽き立てる、フレッシュなコーヒー。東南アジアの豆だけを厳選しているので、南国らしいフルーティーなコーヒーが味わえます。",
     kind: "regular",
     price: 420,
     priceNote: "〜",
@@ -503,13 +477,15 @@ export const PRICE_UNSET = "価格は店頭でご確認ください";
 export const PRICE_VARIABLE = "日替わり・仕入れにより変動します。Instagramでご確認ください";
 
 /** 価格表示用の文字列を返す */
-export function formatPrice(item: Pick<MenuItem, "kind" | "price" | "priceNote">): {
+export function formatPrice(
+  item: Pick<MenuItem, "kind" | "price" | "priceNote" | "priceUnit">,
+): {
   text: string;
   hasPrice: boolean;
 } {
   if (item.price !== null) {
     return {
-      text: `¥${item.price.toLocaleString("ja-JP")}${item.priceNote ?? ""}（税込）`,
+      text: `¥${item.price.toLocaleString("ja-JP")}${item.priceNote ?? ""}（税込）${item.priceUnit ?? ""}`,
       hasPrice: true,
     };
   }

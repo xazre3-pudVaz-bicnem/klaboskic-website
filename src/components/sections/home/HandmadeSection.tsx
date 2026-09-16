@@ -7,7 +7,7 @@ const works = [
   {
     labelEn: "Meat",
     title: "黒毛和牛ローストビーフ",
-    text: "塊のお肉に香ばしい焼き色をつけ、しっとりと火を入れて仕上げます。",
+    text: "厳選したお肉を低温で火入れし、旨みをしっかり閉じ込めます。",
     image: "/images/story/roast-beef-searing.jpg",
     alt: "焼き色をつけたばかりの黒毛和牛の塊肉",
     position: "[&_img]:object-center",
@@ -15,7 +15,7 @@ const works = [
   {
     labelEn: "Fish",
     title: "西京漬け",
-    text: "魚の切り身ひとつひとつに西京味噌をまとわせ、じっくりと漬け込みます。",
+    text: "自家製西京味噌で、新鮮な魚をじっくりと漬け込みます。",
     image: "/images/story/marinated-fish-hand.jpg",
     alt: "西京味噌に漬け込んだ魚の切り身を手に取るようす",
     position: "[&_img]:object-center",
@@ -23,7 +23,7 @@ const works = [
   {
     labelEn: "Sweets",
     title: "彩りバターサンド",
-    text: "焼き上げた生地に、クリームをひとつずつ絞ってサンドしています。",
+    text: "焼き上げたクッキー生地に、手作りバタークリームをひとつずつ絞ってサンドしています。",
     image: "/images/story/staff-piping-butter-sandwich.jpg",
     alt: "彩りバターサンドの生地にクリームを絞るK-laboのスタッフ",
     position: "[&_img]:object-[62%_center]",
@@ -42,14 +42,16 @@ export default function HandmadeSection() {
           <SectionHeading
             index="02"
             label="Handmade"
-            title={<span id="handmade-heading">ひとつひとつ、店内で。</span>}
+            title={<span id="handmade-heading">ひとつひとつを丁寧に。</span>}
           />
         </div>
         <Reveal delay={0.1} className="md:col-span-5 md:col-start-8">
           <p className="font-mincho text-[1.05rem] leading-[2] tracking-[0.06em] text-ink sm:text-lg">
             お肉も、お魚も、スイーツも。
             <br />
-            素材と向き合いながら、K-laboの味に仕上げています。
+            素材と向き合いながら、
+            <br />
+            K-laboの味に仕上げています。
           </p>
         </Reveal>
       </div>

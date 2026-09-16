@@ -1,4 +1,5 @@
 import Link from "next/link";
+import type { ReactNode } from "react";
 import Placeholder from "@/components/ui/Placeholder";
 import Reveal from "@/components/ui/Reveal";
 import SectionHeading from "@/components/ui/SectionHeading";
@@ -6,41 +7,66 @@ import LinkButton from "@/components/ui/LinkButton";
 import { formatPrice, menuCategories, type MenuItem } from "@/data/menu";
 import { getMenuItems } from "@/lib/menu";
 
-const sweets = [
-  {
-    id: "butter-sandwich",
-    image: "/images/sweets/butter-sandwich.jpg",
-    alt: "4色の生地でクリームをはさんだK-laboの彩りバターサンド",
-    note: "色とりどりの生地に、クリームをひとつずつ絞って。",
-  },
+type SweetCard = {
+  /** 価格・リンク先に使うメニューID */
+  id: string;
+  /** 表示名（省略時はメニューの商品名） */
+  name?: ReactNode;
+  image: string;
+  alt: string;
+  note: string;
+  /** false の場合は価格を出さない（価格が別の商品など） */
+  showPrice?: boolean;
+};
+
+const lead: SweetCard = {
+  id: "butter-sandwich",
+  image: "/images/sweets/butter-sandwich.jpg",
+  alt: "4色の生地でクリームをはさんだK-laboの彩りバターサンド",
+  note: "7つの素材の色と味にこだわった、彩り豊かなバターサンドクッキー。",
+};
+
+/** 左から ストロープワッフル → 季節の彩りバターサンドクッキー → ギフトボックス */
+const others: SweetCard[] = [
   {
     id: "stroopwafel",
     image: "/images/sweets/stroopwafel-chocolate.jpg",
     alt: "チョコレートを重ねたK-laboのストロープワッフル",
-    note: "ざくっと香ばしい、薄焼きのワッフル。",
+    note: "サクッと香ばしい、オランダ生まれのワッフル。",
+  },
+  {
+    id: "butter-sandwich",
+    name: "彩りバターサンドクッキー",
+    image: "/images/sweets/wafer-sticks.jpg",
+    alt: "ホワイトとビターのチョコレートをかけたK-laboの彩りバターサンドクッキー",
+    note: "7つの素材の色と味にこだわったバターサンド。（季節限定もあります）",
+    showPrice: false,
   },
   {
     id: "butter-sandwich-gift",
+    name: (
+      <>
+        彩りバターサンド
+        <br />
+        ギフトボックス
+      </>
+    ),
     image: "/images/sweets/butter-sandwich-gift-box.jpg",
     alt: "個包装の彩りバターサンドを詰め合わせたギフトボックス",
     note: "手土産や贈りものに。",
   },
-  {
-    id: "wafer-cookies",
-    image: "/images/sweets/wafer-sticks.jpg",
-    alt: "ホワイトとビターのチョコレートをかけたK-laboのウエハースクッキー",
-    note: "ひと口サイズの軽やかな食感。",
-  },
 ];
 
 const drinks = [
-  { id: "purple-lemonade", image: "/images/drinks/butterfly-pea-soda.jpg" },
-  { id: "citrus-lemonade", image: "/images/drinks/citrus-soda.jpg" },
-  { id: "lemon-mint", image: "/images/drinks/lemon-soda.jpg" },
+  { id: "butterfly-pea-lemonade", image: "/images/drinks/butterfly-pea-soda.jpg" },
+  { id: "mango-lemonade", image: "/images/drinks/citrus-soda.jpg" },
+  { id: "white-peach-lemonade", image: "/images/drinks/lemon-soda.jpg" },
   { id: "coffee", image: "/images/drinks/iced-coffee.jpg" },
 ];
 
-const comingSoon = menuCategories.find((category) => category.id === "sweets")?.comingSoon ?? [];
+const sweetsCategory = menuCategories.find((category) => category.id === "sweets");
+const drinksCategory = menuCategories.find((category) => category.id === "drinks");
+const comingSoon = sweetsCategory?.comingSoon ?? [];
 
 /** 06. スイーツ＆ドリンク — 特定の1品ではなく、スイーツ全体のラインナップを見せる */
 export default async function SweetsDrinksSection() {
@@ -54,7 +80,6 @@ export default async function SweetsDrinksSection() {
     const price = formatPrice(item);
     return price.hasPrice ? price.text : null;
   };
-  const [lead, ...others] = sweets;
 
   return (
     <section aria-labelledby="sweets-heading" className="border-y border-ink/10 bg-ivory-soft/60">
@@ -63,11 +88,17 @@ export default async function SweetsDrinksSection() {
           <SectionHeading
             index="05"
             label="Sweets & Drinks"
-            title={<span id="sweets-heading">甘いものと、一杯の楽しみ</span>}
+            title={
+              <span id="sweets-heading">
+                見ためで味わう
+                <br />
+                至福のひととき
+              </span>
+            }
           />
           <Reveal delay={0.1}>
             <p className="max-w-sm text-[0.84rem] leading-[2.1] text-espresso">
-              店内で仕上げるオリジナルスイーツと、フードに合わせて楽しめるドリンク。おやつの時間にも、手土産にも。
+              見ためで味わう、こだわりのスイーツとドリンク。色、食感を楽しめるK-laboならではのラインナップ。ご褒美時間や、大切な方へのプレゼントに。
             </p>
           </Reveal>
         </div>
@@ -99,7 +130,7 @@ export default async function SweetsDrinksSection() {
             {others.map((item, index) => (
               <Reveal
                 as="li"
-                key={item.id}
+                key={`${item.id}-${index}`}
                 delay={0.08 + index * 0.08}
                 className={index === 2 ? "col-span-2 sm:col-span-1 lg:col-span-2" : undefined}
               >
@@ -111,10 +142,10 @@ export default async function SweetsDrinksSection() {
                     sizes="(min-width: 1024px) 24vw, (min-width: 640px) 30vw, 50vw"
                   />
                   <h3 className="mt-3 font-mincho text-[0.95rem] leading-snug tracking-[0.06em] transition-colors group-hover:text-olive-deep sm:text-base">
-                    {nameOf(item.id)}
+                    {item.name ?? nameOf(item.id)}
                   </h3>
                   <p className="mt-1 text-[0.74rem] leading-[1.8] text-espresso">{item.note}</p>
-                  {priceOf(item.id) && (
+                  {item.showPrice !== false && priceOf(item.id) && (
                     <p className="mt-1 text-[0.82rem] tracking-[0.04em] text-ink">{priceOf(item.id)}</p>
                   )}
                 </Link>
@@ -141,25 +172,36 @@ export default async function SweetsDrinksSection() {
 
         {/* ドリンク */}
         <div className="mt-20 sm:mt-24">
-          <Reveal className="flex items-baseline justify-between gap-6 border-b border-ink/12 pb-4">
-            <h3 className="font-mincho text-xl tracking-[0.1em]">ドリンク</h3>
-            <p className="font-serif-en text-[0.62rem] uppercase tracking-[0.3em] text-olive-deep">
-              Lemonade &amp; Coffee
-            </p>
+          <Reveal className="flex flex-col gap-4 border-b border-ink/12 pb-5">
+            <div className="flex items-baseline justify-between gap-6">
+              <h3 className="font-mincho text-xl tracking-[0.1em]">ドリンク</h3>
+              <p className="font-serif-en text-[0.62rem] uppercase tracking-[0.3em] text-olive-deep">
+                Lemonade &amp; Coffee
+              </p>
+            </div>
+            {drinksCategory?.lineupNote && (
+              <p className="border-l-2 border-gold pl-4 text-[0.8rem] leading-[1.9] text-espresso">
+                {drinksCategory.lineupNote}
+              </p>
+            )}
           </Reveal>
           <ul className="mt-8 grid grid-cols-2 gap-x-3 gap-y-6 sm:grid-cols-4 sm:gap-x-5">
             {drinks.map((drink, index) => (
               <Reveal as="li" key={drink.id} delay={index * 0.08}>
-                <Placeholder
-                  src={drink.image}
-                  alt={`K-laboの${nameOf(drink.id)}`}
-                  aspect="aspect-[4/5]"
-                  sizes="(min-width: 640px) 24vw, 50vw"
-                />
-                <p className="mt-3 text-[0.8rem] tracking-[0.06em] text-ink">{nameOf(drink.id)}</p>
-                {priceOf(drink.id) && (
-                  <p className="text-[0.76rem] tracking-[0.04em] text-espresso">{priceOf(drink.id)}</p>
-                )}
+                <Link href={`/menu#${drink.id}`} className="group block">
+                  <Placeholder
+                    src={drink.image}
+                    alt={`K-laboの${nameOf(drink.id)}`}
+                    aspect="aspect-[4/5]"
+                    sizes="(min-width: 640px) 24vw, 50vw"
+                  />
+                  <p className="mt-3 text-[0.8rem] leading-snug tracking-[0.04em] text-ink transition-colors group-hover:text-olive-deep">
+                    {nameOf(drink.id)}
+                  </p>
+                  {priceOf(drink.id) && (
+                    <p className="text-[0.76rem] tracking-[0.04em] text-espresso">{priceOf(drink.id)}</p>
+                  )}
+                </Link>
               </Reveal>
             ))}
           </ul>

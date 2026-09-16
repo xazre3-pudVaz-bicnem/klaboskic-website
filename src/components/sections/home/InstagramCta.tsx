@@ -28,7 +28,9 @@ export default function InstagramCta() {
               Instagramで
             </h2>
             <p className="max-w-md text-[0.82rem] leading-[2.2] text-ivory/75">
-              当日のラインナップ、営業日カレンダー、新商品のお知らせなど、K-laboの「いま」を毎日の投稿でお届けしています。
+              当日のラインナップ、営業日カレンダー、新商品のお知らせなど、
+              <br />
+              K-laboの「いま」を毎日の投稿でお届けしています。
             </p>
             <a
               href={siteConfig.instagram.url}

@@ -42,10 +42,19 @@ export default async function MenuPage() {
       <PageHero
         label="Menu"
         title="メニュー"
-        titleEn="Lunch / Asian / Meat & Fish / Delica / Sweets / Drinks"
+        titleEn={
+          <>
+            Lunch / Asian / Meat <span className="not-italic">&amp;</span> Fish / Bento{" "}
+            <span className="not-italic">&amp;</span> Party Platter / Sweets / Drinks
+          </>
+        }
         lede={
           <>
-            アジアを原点にした料理から、お肉・お魚の料理、お弁当、オリジナルスイーツ、ドリンクまで。定番メニューは価格を掲載しています。日替わりや仕入れによって変わる品は、店頭・公式Instagramでご案内しています。
+            アジアを原点にした料理から、肉・魚料理、お弁当、オリジナルスイーツ、ドリンクまで。
+            <br />
+            定番メニューは価格を掲載しています。
+            <br />
+            日替わりや仕入れによって変わる品は、店頭・公式Instagramでご案内しています。
           </>
         }
         breadcrumbs={[{ name: "メニュー", path: "/menu" }]}
@@ -95,7 +104,7 @@ export default async function MenuPage() {
                     </p>
                     <h2
                       id={`category-${category.id}-heading`}
-                      className="font-mincho text-2xl tracking-[0.1em] sm:text-3xl"
+                      className="whitespace-nowrap font-mincho text-2xl tracking-[0.08em] md:text-[1.6rem] lg:text-3xl"
                     >
                       {category.name}
                     </h2>
@@ -108,7 +117,12 @@ export default async function MenuPage() {
                           Coming Soon
                         </span>
                         <span className="font-mincho text-[0.95rem] tracking-[0.06em]">
-                          {category.comingSoon.join("／")}
+                          {category.comingSoon.map((name, index, list) => (
+                            <span key={name} className="block">
+                              {name}
+                              {index < list.length - 1 && "／"}
+                            </span>
+                          ))}
                         </span>
                         <span className="text-[0.7rem] text-olive-deep">近日登場予定です。</span>
                       </p>
@@ -224,7 +238,7 @@ export default async function MenuPage() {
               ご予約で。
             </h2>
             <p className="text-[0.82rem] leading-[2.1] text-espresso">
-              表示価格はすべて税込です。メニューは仕入れや季節により変わり、売り切れの際はご容赦ください。アレルギーについては店頭でお尋ねください。
+              表示価格はすべて税込です。メニューは仕入れや季節により変わり、売り切れの際はご容赦ください。アレルギーについては店頭でお気軽にお尋ねください。
             </p>
           </Reveal>
           <div className="flex flex-col gap-12 md:col-span-7 md:col-start-6 lg:col-span-6 lg:col-start-7">

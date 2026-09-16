@@ -61,7 +61,7 @@ export default function AccessSection() {
           <SectionHeading
             index="06"
             label="Access"
-            title={<span id="access-heading">紫駅の、目の前に。</span>}
+            title={<span id="access-heading">駅チカ、アクセス便利。</span>}
           />
 
           {/* 駅からの近さ */}
@@ -79,6 +79,11 @@ export default function AccessSection() {
               </p>
               <p className="mt-3 text-[0.78rem] leading-[1.9] text-espresso">
                 改札を出て東口へ。電車の待ち時間や、お仕事・お買い物帰りにも立ち寄りやすい駅前です。
+              </p>
+              <p className="mt-4 flex flex-wrap items-baseline gap-x-3 gap-y-1 border-t border-ink/10 pt-4">
+                <span className="text-[0.76rem] tracking-[0.1em] text-olive-deep">JR鹿児島本線「二日市駅」から</span>
+                <span className="font-mincho text-lg tracking-[0.1em]">徒歩5分</span>
+                <span className="text-[0.72rem] text-espresso">（{siteConfig.accessJrFromHakata}）</span>
               </p>
             </div>
           </Reveal>
@@ -114,15 +119,15 @@ export default function AccessSection() {
         <div className="flex flex-col gap-6 md:col-span-6 md:col-start-7 lg:col-span-6 lg:col-start-7">
           <Reveal delay={0.15}>
             <Placeholder
-              src="/images/shop/exterior-day.jpg"
-              alt="紫駅東口すぐ、K-laboの外観。入口に立て看板が置かれている"
+              src="/images/shop/exterior-evening.jpg"
+              alt="夕暮れのK-laboの外観。入口にメニューの看板が置かれている"
               aspect="aspect-[16/10]"
               sizes="(min-width: 768px) 50vw, 100vw"
             />
           </Reveal>
           <Reveal delay={0.2}>
             <figure className="grain w-full bg-ink px-7 py-12 text-ivory sm:px-12 sm:py-16">
-              <figcaption className="sr-only">西鉄天神大牟田線 紫駅とK-laboの位置関係</figcaption>
+              <figcaption className="sr-only">西鉄紫駅・JR二日市駅とK-laboの位置関係</figcaption>
               <p className="font-serif-en text-[0.62rem] uppercase tracking-[0.34em] text-gold">
                 Nishitetsu Tenjin–Omuta Line
               </p>
@@ -148,6 +153,32 @@ export default function AccessSection() {
                   </p>
                 </div>
               </div>
+
+              {/* JR鹿児島本線 */}
+              <p className="mt-12 font-serif-en text-[0.62rem] uppercase tracking-[0.34em] text-gold">
+                JR Kagoshima Main Line
+              </p>
+              <div aria-hidden="true" className="mt-8">
+                <div className="relative">
+                  <span className="reveal-line block h-px w-full bg-ivory/35" />
+                  <div className="absolute inset-x-0 -top-[3px] flex justify-between">
+                    <span className="h-[7px] w-[7px] rounded-full border border-ivory/60 bg-ink" />
+                    <span className="h-[7px] w-[7px] rounded-full bg-gold" />
+                    <span className="h-[7px] w-[7px] rounded-full border border-ivory/60 bg-ink" />
+                  </div>
+                </div>
+                <div className="mt-5 flex justify-between text-[0.68rem] tracking-[0.14em] text-ivory/65">
+                  <span>博多</span>
+                  <span className="font-mincho text-base tracking-[0.12em] text-ivory">JR二日市</span>
+                  <span>久留米</span>
+                </div>
+                <p className="mt-6 text-center font-mincho text-sm tracking-[0.18em] text-gold">
+                  二日市駅から徒歩5分
+                </p>
+              </div>
+              <p className="sr-only">
+                JR鹿児島本線「二日市駅」から徒歩5分。博多駅から二日市駅までは約15分です。
+              </p>
             </figure>
           </Reveal>
         </div>

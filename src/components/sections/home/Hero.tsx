@@ -138,8 +138,11 @@ export default function Hero() {
               <span className="mx-1 font-serif-en text-[2rem] leading-none text-gold">0</span>
               分
             </span>
+            <span className="mt-1 text-[0.72rem] tracking-[0.1em] text-ivory/80">
+              {siteConfig.accessJrShort}
+            </span>
             {parking.confirmed && (
-              <span className="mt-1 text-[0.7rem] tracking-[0.1em] text-ivory/65">
+              <span className="mt-0.5 text-[0.7rem] tracking-[0.1em] text-ivory/65">
                 {siteConfig.parking.location}に駐車場{siteConfig.parking.spaces}（{siteConfig.parking.fee}）
               </span>
             )}

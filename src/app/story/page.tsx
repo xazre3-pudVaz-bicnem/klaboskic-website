@@ -9,7 +9,7 @@ import { cn } from "@/lib/utils";
 export const metadata: Metadata = {
   title: "K-laboの軌跡（Bangkok to Chikushino）",
   description:
-    "家族で過ごしたバンコクでの9年間。そこで出会った東南アジアの味の記憶が、筑紫野市紫・紫駅前の小さなテイクアウト＆カフェ「K-labo」になるまでの物語です。",
+    "家族で過ごしたバンコクでの9年間。そこで出会った東南アジアの味の記憶が、筑紫野市紫・紫駅前の小さなカフェ＆テイクアウトショップ「K-labo」になるまでの物語です。",
   alternates: { canonical: "/story" },
   openGraph: {
     title: "K-laboの軌跡（Bangkok to Chikushino）",
@@ -54,26 +54,26 @@ const chapters: Chapter[] = [
       "バンコクで出会ったのは、特別な日にだけ食べるごちそうではありません。街角に、市場に、食卓に、あたりまえのように溶け込んでいる料理たち。",
       "東南アジアの味は、いつも暮らしのすぐそばにありました。",
     ],
-    image: "/images/food/banh-mi-shrimp-plate.jpg",
-    imageAlt: "サラダを添えて皿に盛り付けたK-laboの海老のバインミー",
+    image: "/images/hero/table-set.jpg",
+    imageAlt: "木のテーブルに並んだK-laboのバインミー、ガパオライス、ロコモコ、ヤムウンセン、ローストチキン、レモネード",
   },
   {
     number: "03",
     titleEn: "Unforgettable",
-    title: "忘れられなかった、香りと味",
+    title: "忘れられない、あの香りと味",
     paragraphs: [
       "甘さ、辛さ、酸味、そして立ちのぼる香り。いくつもの要素がひと皿の中で重なり合う、東南アジアの料理。",
       "日本に戻ってからも、あの味の記憶は薄れるどころか、むしろ鮮やかになっていきました。",
     ],
-    image: "/images/story/fresh-fish.jpg",
-    imageAlt: "氷の上に並べられた、魚屋から届いた新鮮な魚",
+    image: "/images/food/green-curry.jpg",
+    imageAlt: "バジルを添えたK-laboのグリーンカレー",
   },
   {
     number: "04",
-    titleEn: "Making It Casual",
-    title: "あの味を、もっと気軽に",
+    titleEn: "Handcrafted with Care",
+    title: "心を込めて、一つひとつ手作り",
     paragraphs: [
-      "思い出の中の味を、自分たちの手で。そして、まだ東南アジアの料理に馴染みのない人にも、日常の延長で気軽に楽しんでもらえたら。",
+      "記憶に残る味を、今の暮らしにそっとなじむ形で、一つひとつ丁寧に仕上げています。より多くの方々に、気軽に楽しんでもらえるように。",
       "そんな思いが、少しずつかたちになっていきました。",
     ],
     image: "/images/story/staff-piping-butter-sandwich.jpg",
@@ -120,7 +120,7 @@ export default function StoryPage() {
         titleEn="Bangkok to Chikushino"
         lede={
           <>
-            福岡県筑紫野市、西鉄紫駅のすぐそば。小さなテイクアウト＆カフェ「K-labo」が生まれるまでには、家族でバンコクに暮らした9年間の物語があります。
+            福岡県筑紫野市、西鉄紫駅のすぐそば。小さなカフェ＆テイクアウトショップ「K-labo」が生まれるまでには、家族でバンコクに暮らした9年間の物語があります。
           </>
         }
         breadcrumbs={[{ name: "K-laboの軌跡", path: "/story" }]}

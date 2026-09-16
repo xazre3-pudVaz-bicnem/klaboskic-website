@@ -8,7 +8,7 @@ import { siteConfig } from "@/data/siteConfig";
 export const metadata: Metadata = {
   title: "お知らせ",
   description:
-    "筑紫野市・紫駅すぐのテイクアウト＆カフェ K-laboからのお知らせ一覧。日々の営業日・当日メニューなどの最新情報は公式Instagramでご案内しています。",
+    "筑紫野市・紫駅すぐのカフェ＆テイクアウト K-laboからのお知らせ一覧。日々の営業日・当日メニューなどの最新情報は公式Instagramでご案内しています。",
   alternates: { canonical: "/news" },
   openGraph: {
     title: "お知らせ｜K-labo｜筑紫野のカフェ・テイクアウト",

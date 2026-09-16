@@ -5,7 +5,7 @@ import { ImageResponse } from "next/og";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 export const alt =
-  "K-labo — Sweets & Delica | 福岡県筑紫野市紫・紫駅すぐのテイクアウト＆カフェ";
+  "K-labo — Sweets & Delica | 福岡県筑紫野市紫・紫駅すぐのカフェ＆テイクアウト";
 
 async function dataUri(relPath: string, mime: string) {
   const buffer = await readFile(join(process.cwd(), "public", relPath));

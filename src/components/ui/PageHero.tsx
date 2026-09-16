@@ -8,7 +8,7 @@ type PageHeroProps = {
   /** ページ見出し（h1） */
   title: ReactNode;
   /** 補足の英字タイトル */
-  titleEn?: string;
+  titleEn?: ReactNode;
   /** リード文 */
   lede?: ReactNode;
   /** パンくず（ホーム以外） */

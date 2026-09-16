@@ -18,7 +18,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "店舗情報・アクセス｜K-labo｜筑紫野・紫駅すぐ",
     description:
-      "福岡県筑紫野市紫2-1-5。西鉄紫駅東口から徒歩約0分のテイクアウト＆カフェ K-laboへのアクセスをご案内します。",
+      "福岡県筑紫野市紫2-1-5。西鉄紫駅東口から徒歩約0分のカフェ＆テイクアウト K-laboへのアクセスをご案内します。",
     url: "/access",
     images: [{ url: "/opengraph-image", width: 1200, height: 630 }],
   },
@@ -34,7 +34,18 @@ const shopInfo: InfoRow[] = [
   { label: "店名", labelEn: "Name", value: "K-labo（ケイラボ）" },
   { label: "業態", labelEn: "Type", value: "カフェ＆テイクアウトショップ" },
   { label: "所在地", labelEn: "Address", value: siteConfig.address.full },
-  { label: "アクセス", labelEn: "Access", value: siteConfig.access },
+  {
+    label: "アクセス",
+    labelEn: "Access",
+    value: (
+      <>
+        {siteConfig.access}
+        <br />
+        {siteConfig.accessJr}
+        <span className="block text-[0.76rem] text-olive-deep">（{siteConfig.accessJrFromHakata}）</span>
+      </>
+    ),
+  },
   {
     label: "営業時間",
     labelEn: "Hours",
@@ -46,6 +57,7 @@ const shopInfo: InfoRow[] = [
       </>
     ),
   },
+  { label: "店休日", labelEn: "Closed", value: siteConfig.closedDays },
   {
     label: "電話番号",
     labelEn: "Tel",
@@ -63,7 +75,7 @@ const shopInfo: InfoRow[] = [
     label: "店内席",
     labelEn: "Seating",
     value:
-      "テイクアウトが中心のお店ですが、カウンター席もご用意しています。お仕事帰りやお買い物ついでにもお立ち寄りください。",
+      "カウンター席もご用意しています。お仕事帰りやお買い物ついでにもお立ち寄りください。",
   },
   {
     label: "駐車場",
@@ -99,7 +111,7 @@ export default function AccessPage() {
         titleEn="Murasaki Sta. East Exit — 0 min walk"
         lede={
           <>
-            K-laboは、西鉄天神大牟田線「紫駅」東口を出てすぐ。西鉄二日市駅からもひと駅の、立ち寄りやすい駅前のお店です。
+            K-laboは、西鉄天神大牟田線「紫駅」東口を出てすぐ。西鉄二日市駅からもひと駅、JR鹿児島本線「二日市駅」からも徒歩5分（JR博多駅から二日市駅まで約15分）の、立ち寄りやすい駅前のお店です。
           </>
         }
         breadcrumbs={[{ name: "店舗情報・アクセス", path: "/access" }]}
@@ -206,7 +218,7 @@ export default function AccessPage() {
               分
             </span>
           </Reveal>
-          <div className="mt-12 grid gap-10 md:grid-cols-2">
+          <div className="mt-12 grid gap-6 md:grid-cols-3 md:gap-8">
             <Reveal delay={0.1}>
               <div className="flex h-full flex-col gap-4 border border-ink/12 bg-ivory px-8 py-9">
                 <p className="font-serif-en text-[0.62rem] uppercase tracking-[0.3em] text-gold-text">
@@ -230,6 +242,22 @@ export default function AccessPage() {
                 </h3>
                 <p className="text-[0.82rem] leading-[2.2] text-espresso">
                   西鉄二日市駅からはひと駅。二日市エリアでのお買い物や乗り換えの途中にも、気軽にご利用いただけます。
+                </p>
+              </div>
+            </Reveal>
+            <Reveal delay={0.3}>
+              <div className="flex h-full flex-col gap-4 border border-ink/12 bg-ivory px-8 py-9">
+                <p className="font-serif-en text-[0.62rem] uppercase tracking-[0.3em] text-gold-text">
+                  From JR Futsukaichi Sta.
+                </p>
+                <h3 className="font-mincho text-lg tracking-[0.1em]">
+                  JR二日市駅から
+                </h3>
+                <p className="flex items-baseline gap-2 font-mincho text-xl tracking-[0.1em]">
+                  徒歩<span className="font-serif-en text-4xl leading-none text-gold-text">5</span>分
+                </p>
+                <p className="text-[0.82rem] leading-[2.2] text-espresso">
+                  JR鹿児島本線「二日市駅」から徒歩5分。JR博多駅から二日市駅までは約15分です。
                 </p>
               </div>
             </Reveal>
@@ -299,7 +327,7 @@ export default function AccessPage() {
             <Reveal delay={0.15} className="md:col-span-5 md:col-start-8">
               <Placeholder
                 src={siteConfig.parking.image}
-                alt="K-laboの駐車場"
+                alt="K-labo敷地内の駐車場"
                 aspect="aspect-[4/3]"
                 sizes="(min-width: 768px) 42vw, 100vw"
               />
@@ -331,9 +359,9 @@ export default function AccessPage() {
             <Reveal delay={0.1}>
               <figure>
                 <Placeholder
-                  src="/images/shop/exterior-night.jpg"
-                  alt="夜のK-labo。壁面にロゴの看板と案内バナーが掲げられている"
-                  aspect="aspect-[4/3]"
+                  src="/images/shop/exterior-side-banner.jpg"
+                  alt="K-laboの外壁。ロゴの看板と人気メニューのバナーが掲げられている"
+                  aspect="aspect-[16/9]"
                   sizes="(min-width: 768px) 48vw, 100vw"
                 />
                 <figcaption className="mt-4 text-[0.78rem] leading-[2] text-espresso">

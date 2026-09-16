@@ -25,7 +25,7 @@ export const siteConfig = {
   tagline: "アジアで出会ったおいしさを、日常の一皿へ…",
   /** サブコピー（トップページ・フッター・構造化データの説明文に使用） */
   subTagline:
-    "K-laboの原点は、家族で暮らしたバンコクでの9年間の記憶。東南アジア料理や、お肉・お魚の料理、オリジナルスイーツを楽しめるカフェ＆テイクアウトショップです。",
+    "K-laboの原点は、バンコクで過ごした9年間。東南アジア料理をメインに、肉・魚料理やスイーツにこだわったSweets & Delica Caféです。",
   /** 業態の短い説明（フッター等） */
   shopType: "アジアを原点にした、カフェ＆テイクアウトショップ",
 
@@ -53,6 +53,11 @@ export const siteConfig = {
   /** アクセス（確認済み） */
   access: "西鉄天神大牟田線「紫駅」東口から徒歩約0分",
   accessShort: "紫駅東口から徒歩約0分",
+  /** JRでのアクセス（確認済み） */
+  accessJr: "JR鹿児島本線「二日市駅」から徒歩5分",
+  accessJrShort: "JR二日市駅から徒歩5分",
+  /** JR博多駅からの所要時間 */
+  accessJrFromHakata: "JR博多駅から二日市駅まで約15分",
 
   /** 電話番号（確認済み） */
   phone: "070-8959-5364",
@@ -70,12 +75,8 @@ export const siteConfig = {
   /** 営業時間の要約表記 */
   hoursSummary: "月〜金 11:30–18:30／土・日 11:30–17:00",
 
-  /**
-   * 定休日 — 未確認。
-   * 上記は各曜日の営業時間であり、休業日については別途確認が必要。
-   * 実際の営業日は公式Instagramの「営業日カレンダー」で告知されている。
-   */
-  closedDays: "",
+  /** 店休日（確認済み） */
+  closedDays: "不定休（SNSにてご案内）",
   /** 営業日についての共通注記 */
   openDaysNote:
     "臨時休業などの最新の営業日は、公式Instagramの営業日カレンダーをご確認ください。",
@@ -125,13 +126,13 @@ export const siteConfig = {
     /** 台数 */
     spaces: "3台",
     /** 場所 */
-    location: "店舗前",
+    location: "敷地内",
     /** 料金 */
     fee: "無料",
     /** 補足（例: "満車の際は近隣のコインパーキングをご利用ください"） */
     note: "",
     /** 駐車場の写真（/public 基準。任意） */
-    image: null as string | null,
+    image: "/images/shop/parking.jpg" as string | null,
   },
 
   /**

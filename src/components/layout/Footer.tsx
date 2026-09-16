@@ -20,7 +20,9 @@ export default function Footer() {
             <p className="max-w-xs text-xs leading-[2] text-ivory/70">
               {siteConfig.tagline}
               <br />
-              {siteConfig.shopType}
+              アジアを原点にした、
+              <br />
+              カフェ＆テイクアウトショップ
             </p>
           </div>
 
@@ -43,7 +45,7 @@ export default function Footer() {
               <li>
                 <Link
                   href="/privacy"
-                  className="inline-flex min-h-10 items-center text-[0.82rem] tracking-[0.1em] text-ivory/85 transition-colors hover:text-gold"
+                  className="inline-flex min-h-10 items-center whitespace-nowrap text-[0.82rem] tracking-[0.1em] text-ivory/85 transition-colors hover:text-gold"
                 >
                   プライバシーポリシー
                 </Link>
@@ -61,7 +63,10 @@ export default function Footer() {
               <br />
               {siteConfig.address.full}
               <br />
-              {siteConfig.access}
+              {/* 駅からのアクセスは1行に収める */}
+              <span className="whitespace-nowrap text-[0.7rem] tracking-[0.02em]">{siteConfig.access}</span>
+              <br />
+              <span className="whitespace-nowrap text-[0.7rem] tracking-[0.02em]">{siteConfig.accessJr}</span>
             </address>
             <p className="text-xs leading-[2.1] text-ivory/70">
               月〜金 11:30–18:30
@@ -93,7 +98,7 @@ export default function Footer() {
 
         <div className="mt-14 flex flex-col items-start justify-between gap-3 border-t border-ivory/15 pt-6 sm:flex-row sm:items-center">
           <p className="font-serif-en text-[0.65rem] uppercase tracking-[0.26em] text-ivory/50">
-            Chikushino, Fukuoka — Takeout &amp; Cafe
+            Chikushino, Fukuoka — Cafe &amp; Take Out
           </p>
           <p className="text-[0.7rem] tracking-[0.14em] text-ivory/50">
             &copy; {year} {siteConfig.name}
