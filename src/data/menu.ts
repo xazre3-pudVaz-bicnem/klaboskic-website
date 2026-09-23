@@ -109,7 +109,6 @@ export const menuCategories: MenuCategory[] = [
       "K-labo特製のお弁当と、集まりの席に映えるオードブル。ご予算などのご相談もお気軽にお申し付けください。",
     lineupNote:
       "オードブルのご注文・ご相談は、お電話または公式InstagramのDMへどうぞ。",
-    comingSoon: ["スポーツ弁当"],
   },
   {
     id: "sweets",
@@ -334,6 +333,20 @@ export const menuItems: MenuItem[] = [
     price: null,
     category: "delica",
     image: "/images/delica/bento-mixed.jpg",
+    isTakeout: true,
+    isAvailable: true,
+    allergenNote: null,
+  },
+  {
+    id: "sports-bento",
+    name: "スポーツ弁当",
+    nameEn: "Sports Bento",
+    description:
+      "試合や大会、遠征などに。食べやすさとボリュームを考えた、K-laboのスポーツ弁当です。チームや団体でのご注文も承ります。",
+    kind: "regular",
+    price: null,
+    category: "delica",
+    image: "/images/delica/sports-bento.jpg",
     isTakeout: true,
     isAvailable: true,
     allergenNote: null,
