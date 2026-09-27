@@ -68,7 +68,7 @@ export function cafeJsonLd() {
           ],
         }
       : {}),
-    sameAs: [siteConfig.instagram.url],
+    sameAs: [siteConfig.instagram.url, siteConfig.tabelog.url].filter(Boolean),
     ...(siteConfig.phone ? { telephone: siteConfig.phone } : {}),
     ...(siteConfig.hours.length
       ? {

@@ -6,28 +6,27 @@ import { getParkingInfo, siteConfig } from "@/data/siteConfig";
 /**
  * ヒーロー写真
  *
- * PCとスマートフォンで別の写真を出し分ける（アートディレクション）。
- * PCでは写真枠を元写真と同じ4:3にして、集合写真の料理がほぼ切れずに見えるようにしている。
- * 横長の集合写真を縦長の画面に無理にトリミングすると料理が切れるため、
- * スマートフォンでは縦に切り抜いても料理がきれいに見える単品写真に切り替える。
- * <picture> で出し分けるので、ダウンロードされるのは画面に合う1枚だけ。
+ * PCとスマートフォンで別の写真を出し分けられる（アートディレクション）。
+ * いまは同じ写真を使用。<picture> で出し分けるため、
+ * ダウンロードされるのは画面に合う1枚だけ。
  *
  * 写真を差し替えるときは src・width・height（元画像のピクセル数）を書き換える。
+ * 横長写真は左右がトリミングされるので、object-position で主役の位置を調整する。
  */
 const HERO_IMAGES = {
-  /** PC（1024px以上）— 料理が並んだ集合写真 */
+  /** PC（1024px以上） */
   desktop: {
-    src: "/images/hero/table-set.jpg",
-    width: 1448,
-    height: 1086,
+    src: "/images/hero/interior-coffee.jpg",
+    width: 1672,
+    height: 941,
   },
-  /** スマートフォン・タブレット — 単品写真 */
+  /** スマートフォン・タブレット */
   mobile: {
-    src: "/images/food/banh-mi-shrimp-avocado.jpg",
-    width: 1448,
-    height: 1086,
+    src: "/images/hero/interior-coffee.jpg",
+    width: 1672,
+    height: 941,
   },
-  alt: "木のテーブルに並んだK-laboのバインミー、ガパオライス、ロコモコ、ヤムウンセン、ローストチキン、レモネード",
+  alt: "やわらかな光が差し込むK-laboの店内。木のカウンターにテイクアウトのコーヒーが置かれている",
 };
 
 const delay = (seconds: number) =>
@@ -55,7 +54,7 @@ export default function Hero() {
             {...imgProps}
             loading="eager"
             fetchPriority="high"
-            className="absolute inset-0 h-full w-full object-cover object-[50%_58%] lg:object-center"
+            className="absolute inset-0 h-full w-full object-cover object-[30%_center] lg:object-[36%_center]"
           />
         </picture>
         {/* ヘッダーの文字を読みやすくする上端の影と、本文へつなぐ下端のグラデーション */}

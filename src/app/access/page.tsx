@@ -176,6 +176,17 @@ export default function AccessPage() {
                 <InstagramIcon className="h-4 w-4" />
                 {siteConfig.instagram.handle}
               </a>
+              {siteConfig.tabelog.url && (
+                <a
+                  href={siteConfig.tabelog.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex min-h-11 items-center gap-2.5 border-b border-ink/40 py-2 text-sm tracking-[0.12em] transition-colors hover:text-olive-deep"
+                >
+                  {siteConfig.tabelog.name}
+                  <span className="sr-only">でK-laboを見る（新しいタブで開きます）</span>
+                </a>
+              )}
             </Reveal>
           </div>
 

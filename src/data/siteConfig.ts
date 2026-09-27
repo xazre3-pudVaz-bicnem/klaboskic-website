@@ -148,6 +148,12 @@ export const siteConfig = {
     "https://www.google.com/maps/search/?api=1&query=" +
     encodeURIComponent("K-labo 福岡県筑紫野市紫2-1-5"),
 
+  /** 食べログの店舗ページ（確認済み） */
+  tabelog: {
+    name: "食べログ",
+    url: "https://tabelog.com/fukuoka/A4003/A400301/40074634/",
+  },
+
   /** Instagram のDM画面を直接開くURL */
   instagramDmUrl: "https://ig.me/m/klaboskic",
 
