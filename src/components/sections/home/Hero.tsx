@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { getImageProps } from "next/image";
-import { ArrowRightIcon, TrainIcon } from "@/components/ui/icons";
+import { ArrowRightIcon, CalendarIcon, TrainIcon } from "@/components/ui/icons";
 import { getParkingInfo, siteConfig } from "@/data/siteConfig";
 
 /**
@@ -74,7 +74,7 @@ export default function Hero() {
       {/* コピー */}
       <div className="grain relative z-10 -mt-6 flex flex-col justify-center px-6 pb-14 sm:px-10 lg:order-1 lg:col-span-4 lg:mt-0 lg:px-8 lg:pb-6 lg:pt-14 xl:px-12 xl:pb-10 xl:pt-20 2xl:px-16">
         <p
-          className="hero-fade flex items-center gap-4 font-serif-en text-[0.6rem] uppercase tracking-[0.3em] text-gold sm:text-[0.68rem] sm:tracking-[0.36em]"
+          className="hero-fade flex items-center gap-4 whitespace-nowrap font-serif-en text-[0.6rem] uppercase tracking-[0.3em] text-gold sm:text-[0.68rem] sm:tracking-[0.36em] lg:text-[0.55rem] lg:tracking-[0.24em] xl:text-[0.66rem] xl:tracking-[0.32em]"
           style={delay(0.1)}
         >
           <span aria-hidden="true" className="inline-block h-px w-8 shrink-0 bg-gold/60 sm:w-10" />
@@ -100,19 +100,35 @@ export default function Hero() {
         </p>
 
         <div
-          className="hero-fade mt-8 grid grid-cols-2 gap-2.5 sm:flex sm:flex-wrap sm:gap-3 lg:mt-5 xl:mt-7"
+          className="hero-fade mt-8 grid grid-cols-2 gap-2.5 sm:max-w-md sm:gap-3 lg:mt-5 xl:mt-7"
           style={delay(0.85)}
         >
+          {/* ネット予約はファーストビューで最も目立たせる */}
+          {siteConfig.reservation.onlineUrl && (
+            <a
+              href={siteConfig.reservation.onlineUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group col-span-2 inline-flex min-h-13 items-center justify-center gap-2.5 bg-gold px-3 py-3.5 text-[0.82rem] tracking-[0.06em] text-ink transition-colors duration-300 hover:bg-ivory whitespace-nowrap sm:px-7 sm:text-sm sm:tracking-[0.1em] lg:px-3 lg:text-[0.76rem] lg:tracking-[0.02em] xl:px-5 xl:text-sm xl:tracking-[0.06em]"
+            >
+              <CalendarIcon className="h-4 w-4" />
+              {siteConfig.reservation.onlineLabel}
+              <ArrowRightIcon className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-1" />
+              <span className="sr-only">
+                （{siteConfig.reservation.onlineNote}・新しいタブで開きます）
+              </span>
+            </a>
+          )}
           <Link
             href="/menu"
-            className="group inline-flex min-h-13 items-center justify-center gap-2.5 bg-ivory px-3 py-3.5 text-[0.8rem] tracking-[0.06em] text-ink transition-colors duration-300 hover:bg-gold sm:px-7 sm:text-sm sm:tracking-[0.1em] lg:px-4 lg:tracking-[0.04em] xl:px-6 xl:tracking-[0.08em]"
+            className="group inline-flex min-h-13 items-center justify-center gap-2.5 bg-ivory px-3 py-3.5 text-[0.8rem] tracking-[0.06em] text-ink transition-colors duration-300 hover:bg-gold whitespace-nowrap sm:px-7 sm:text-sm sm:tracking-[0.1em] lg:px-3 lg:text-[0.76rem] lg:tracking-[0.02em] xl:px-5 xl:text-sm xl:tracking-[0.06em]"
           >
             メニューを見る
             <ArrowRightIcon className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-1" />
           </Link>
           <Link
             href="/takeout"
-            className="group inline-flex min-h-13 items-center justify-center gap-2.5 border border-ivory/40 px-3 py-3.5 text-[0.8rem] tracking-[0.06em] transition-colors duration-300 hover:border-ivory hover:bg-ivory hover:text-ink sm:px-7 sm:text-sm sm:tracking-[0.1em] lg:px-4 lg:tracking-[0.04em] xl:px-6 xl:tracking-[0.08em]"
+            className="group inline-flex min-h-13 items-center justify-center gap-2.5 border border-ivory/40 px-3 py-3.5 text-[0.8rem] tracking-[0.06em] transition-colors duration-300 hover:border-ivory hover:bg-ivory hover:text-ink whitespace-nowrap sm:px-7 sm:text-sm sm:tracking-[0.1em] lg:px-3 lg:text-[0.76rem] lg:tracking-[0.02em] xl:px-5 xl:text-sm xl:tracking-[0.06em]"
           >
             テイクアウトについて
           </Link>

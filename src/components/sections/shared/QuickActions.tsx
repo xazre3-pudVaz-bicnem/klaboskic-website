@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { ReactNode } from "react";
 import {
   BagIcon,
+  CalendarIcon,
   DeliveryIcon,
   ExternalIcon,
   InstagramIcon,
@@ -12,6 +13,7 @@ import { siteConfig } from "@/data/siteConfig";
 import { cn } from "@/lib/utils";
 
 export type QuickActionKey =
+  | "reserve"
   | "menu"
   | "takeout"
   | "uberEats"
@@ -31,6 +33,14 @@ type Action = {
 function getAction(key: QuickActionKey): Action {
   const iconClass = "h-5 w-5 shrink-0";
   switch (key) {
+    case "reserve":
+      return {
+        label: siteConfig.reservation.onlineLabel,
+        sub: siteConfig.reservation.onlineNote,
+        icon: <CalendarIcon className={iconClass} />,
+        href: siteConfig.reservation.onlineUrl || null,
+        external: true,
+      };
     case "menu":
       return {
         label: "メニューを見る",
@@ -84,6 +94,7 @@ type QuickActionsProps = {
 };
 
 const DEFAULT_ACTIONS: QuickActionKey[] = [
+  "reserve",
   "menu",
   "takeout",
   "uberEats",

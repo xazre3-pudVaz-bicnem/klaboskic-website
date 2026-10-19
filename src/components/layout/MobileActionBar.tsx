@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import {
+  CalendarIcon,
   InstagramIcon,
   MapPinIcon,
   MenuBookIcon,
@@ -47,9 +48,24 @@ export default function MobileActionBar() {
             aria-label={`電話する ${siteConfig.phone}`}
           >
             <PhoneIcon className="h-5 w-5 text-gold" />
-            電話・予約
+            電話
           </a>
         </li>
+        {siteConfig.reservation.onlineUrl && (
+          <li className="flex flex-1">
+            <a
+              href={siteConfig.reservation.onlineUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={itemClass}
+              tabIndex={visible ? 0 : -1}
+            >
+              <CalendarIcon className="h-5 w-5 text-gold" />
+              予約
+              <span className="sr-only">（{siteConfig.reservation.onlineNote}・新しいタブで開きます）</span>
+            </a>
+          </li>
+        )}
         <li className="flex flex-1">
           <Link href="/menu" className={itemClass} tabIndex={visible ? 0 : -1}>
             <MenuBookIcon className="h-5 w-5 text-gold" />

@@ -170,6 +170,16 @@ export function CarIcon({ className }: IconProps) {
   );
 }
 
+export function CalendarIcon({ className }: IconProps) {
+  return (
+    <LineIcon className={className}>
+      <rect x="3.5" y="5" width="17" height="15" rx="2" />
+      <path d="M3.5 9.5h17M8 3.5v3M16 3.5v3" />
+      <path d="M8 13h3v3H8z" fill="currentColor" stroke="none" />
+    </LineIcon>
+  );
+}
+
 export function MessageIcon({ className }: IconProps) {
   return (
     <LineIcon className={className}>

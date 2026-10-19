@@ -1,4 +1,4 @@
-import { InstagramIcon, PhoneIcon } from "@/components/ui/icons";
+import { CalendarIcon, ExternalIcon, InstagramIcon, PhoneIcon } from "@/components/ui/icons";
 import { siteConfig } from "@/data/siteConfig";
 import { cn } from "@/lib/utils";
 
@@ -36,6 +36,24 @@ export default function ReserveBlock({ dark = false, className }: ReserveBlockPr
         </p>
       </div>
       <div className="flex flex-col gap-2.5 sm:flex-row sm:flex-wrap">
+        {siteConfig.reservation.onlineUrl && (
+          <a
+            href={siteConfig.reservation.onlineUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={cn(
+              buttonBase,
+              dark
+                ? "bg-gold text-ink hover:bg-ivory"
+                : "bg-gold-deep text-ink hover:bg-ink hover:text-ivory",
+            )}
+          >
+            <CalendarIcon className="h-4 w-4" />
+            {siteConfig.reservation.onlineLabel}
+            <ExternalIcon className="h-3 w-3 opacity-70" />
+            <span className="sr-only">（{siteConfig.reservation.onlineNote}・新しいタブで開きます）</span>
+          </a>
+        )}
         <a
           href={siteConfig.phoneHref}
           className={cn(
@@ -66,7 +84,9 @@ export default function ReserveBlock({ dark = false, className }: ReserveBlockPr
           <span className="sr-only">（新しいタブで開きます）</span>
         </a>
       </div>
-      <p className={cn("text-[0.72rem] tracking-[0.04em]", dark ? "text-ivory/60" : "text-olive-deep")}>
+      <p className={cn("text-[0.72rem] leading-[1.9] tracking-[0.04em]", dark ? "text-ivory/60" : "text-olive-deep")}>
+        ネット予約は{siteConfig.reservation.onlineNote}
+        <br />
         Tel. {siteConfig.phone}／{siteConfig.hoursSummary}
       </p>
     </div>

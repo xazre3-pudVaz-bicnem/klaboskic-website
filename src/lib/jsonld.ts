@@ -57,6 +57,25 @@ export function cafeJsonLd() {
       name,
     })),
     hasMenu: `${BASE}/menu`,
+    ...(siteConfig.reservation.onlineUrl
+      ? {
+          acceptsReservations: siteConfig.reservation.onlineUrl,
+          potentialAction: {
+            "@type": "ReserveAction",
+            target: {
+              "@type": "EntryPoint",
+              urlTemplate: siteConfig.reservation.onlineUrl,
+              inLanguage: "ja",
+              actionPlatform: [
+                "http://schema.org/DesktopWebPlatform",
+                "http://schema.org/IOSPlatform",
+                "http://schema.org/AndroidPlatform",
+              ],
+            },
+            result: { "@type": "FoodEstablishmentReservation", name: "席のご予約" },
+          },
+        }
+      : {}),
     ...(siteConfig.parking.spaces
       ? {
           amenityFeature: [
