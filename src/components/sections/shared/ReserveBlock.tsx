@@ -85,7 +85,7 @@ export default function ReserveBlock({ dark = false, className }: ReserveBlockPr
         </a>
       </div>
       <p className={cn("text-[0.72rem] leading-[1.9] tracking-[0.04em]", dark ? "text-ivory/60" : "text-olive-deep")}>
-        ネット予約は{siteConfig.reservation.onlineNote}
+        お席のご予約は{siteConfig.reservation.onlineNote}
         <br />
         Tel. {siteConfig.phone}／{siteConfig.hoursSummary}
       </p>

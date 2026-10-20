@@ -118,7 +118,7 @@ export const siteConfig = {
     message: "ネット・お電話・Instagramから、ご予約・お取り置きを承ります。",
     /** 食べログのネット予約フォーム（24時間受付） */
     onlineUrl: "https://yoyaku.tabelog.com/yoyaku/net_booking_form/index?rcd=40074634",
-    onlineLabel: "ネットで予約",
+    onlineLabel: "お席のご予約",
     onlineNote: "食べログ・24時間受付",
   },
 

@@ -103,7 +103,7 @@ export default function Hero() {
           className="hero-fade mt-8 grid grid-cols-2 gap-2.5 sm:max-w-md sm:gap-3 lg:mt-5 xl:mt-7"
           style={delay(0.85)}
         >
-          {/* ネット予約はファーストビューで最も目立たせる */}
+          {/* お席のご予約はファーストビューで最も目立たせる */}
           {siteConfig.reservation.onlineUrl && (
             <a
               href={siteConfig.reservation.onlineUrl}
