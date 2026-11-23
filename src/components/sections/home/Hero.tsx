@@ -90,6 +90,9 @@ export default function Hero() {
           おいしさを、
           <br />
           日常の一皿へ…
+          <span className="mt-4 block font-sans text-[0.72rem] leading-[1.9] tracking-[0.14em] text-gold sm:text-[0.8rem] lg:mt-3 lg:text-[0.68rem] xl:text-[0.78rem]">
+            筑紫野・紫駅東口すぐのカフェ＆テイクアウト
+          </span>
         </h1>
 
         <p

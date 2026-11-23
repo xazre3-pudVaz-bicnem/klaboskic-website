@@ -1,3 +1,4 @@
+import Link from "next/link";
 import Placeholder from "@/components/ui/Placeholder";
 import Reveal from "@/components/ui/Reveal";
 import SectionHeading from "@/components/ui/SectionHeading";
@@ -30,6 +31,14 @@ export default function TakeoutSection() {
             <p>
               店内でのテイクアウトはもちろん、{siteConfig.uberEats.name}・{siteConfig.rocketNow.name}
               でのデリバリーにも対応。お弁当やオードブルのご予約を承っております。
+            </p>
+            <p className="mt-3">
+              <Link
+                href="/order"
+                className="text-[0.82rem] tracking-[0.08em] text-olive-deep underline decoration-olive-deep/40 underline-offset-4 hover:text-ink"
+              >
+                オードブル・お弁当のご予約について
+              </Link>
             </p>
           </Reveal>
           <Reveal delay={0.15} className="hidden md:block">

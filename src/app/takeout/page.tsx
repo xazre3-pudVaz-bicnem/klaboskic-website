@@ -12,7 +12,7 @@ import { faqJsonLd } from "@/lib/jsonld";
 import { getParkingInfo, siteConfig } from "@/data/siteConfig";
 
 export const metadata: Metadata = {
-  title: "テイクアウトのご案内｜紫駅すぐの持ち帰りグルメ",
+  title: "テイクアウト・デリバリーのご案内",
   description:
     "筑紫野市でテイクアウトなら、紫駅東口から徒歩約0分のK-labo。バインミーや黒毛和牛ローストビーフ、お弁当、彩りバターサンドを持ち帰りで。Uber Eats・ロケットナウのデリバリー、お電話・Instagramでのご予約・お取り置きにも対応しています。",
   alternates: { canonical: "/takeout" },

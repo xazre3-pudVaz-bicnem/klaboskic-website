@@ -207,9 +207,12 @@ export default async function SweetsDrinksSection() {
           </ul>
         </div>
 
-        <Reveal delay={0.1} className="mt-12">
+        <Reveal delay={0.1} className="mt-12 flex flex-wrap gap-x-10 gap-y-4">
           <LinkButton href="/menu#category-sweets" variant="text">
             スイーツ・ドリンクのメニューを見る
+          </LinkButton>
+          <LinkButton href="/gift" variant="text">
+            手土産・ギフトについて
           </LinkButton>
         </Reveal>
       </div>

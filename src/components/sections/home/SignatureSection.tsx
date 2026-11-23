@@ -144,6 +144,9 @@ export default async function SignatureSection() {
             ほかにも、サラダ・デザート・ドリンク付きのランチセットや、ヤムウンセン、ロコモコ、西京焼き、お弁当などをご用意しています。
           </p>
           <LinkButton href="/menu">メニューと価格を見る</LinkButton>
+          <LinkButton href="/asian" variant="text">
+            バインミー・アジアンごはんについて
+          </LinkButton>
         </Reveal>
       </div>
     </section>

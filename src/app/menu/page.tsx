@@ -9,6 +9,8 @@ import { menuJsonLd } from "@/lib/jsonld";
 import { getMenuItems } from "@/lib/menu";
 import { formatPrice, menuCategories } from "@/data/menu";
 import { cn } from "@/lib/utils";
+import Link from "next/link";
+import { featurePages } from "@/data/siteConfig";
 
 export const metadata: Metadata = {
   title: "メニュー・価格｜バインミー・ローストビーフ・スイーツ",
@@ -111,6 +113,17 @@ export default async function MenuPage() {
                     <p className="max-w-sm text-[0.82rem] leading-[2.2] text-espresso">
                       {category.description}
                     </p>
+                    {featurePages
+                      .filter((page) => page.menuCategory === category.id)
+                      .map((page) => (
+                        <Link
+                          key={page.href}
+                          href={page.href}
+                          className="w-fit text-[0.78rem] tracking-[0.08em] text-olive-deep underline decoration-olive-deep/40 underline-offset-4 hover:text-ink"
+                        >
+                          {page.label}について詳しく
+                        </Link>
+                      ))}
                     {category.comingSoon && category.comingSoon.length > 0 && (
                       <p className="mt-2 flex flex-col gap-1 border border-gold-deep/50 bg-paper px-4 py-3">
                         <span className="font-serif-en text-[0.72rem] italic tracking-[0.12em] text-gold-text">

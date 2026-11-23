@@ -208,6 +208,16 @@ export const navigation = [
   { href: "/news", label: "お知らせ", labelEn: "News" },
 ] as const;
 
+/**
+ * 特集ページ（フッター・メニューページから内部リンクする）
+ * 「筑紫野 バインミー」「筑紫野 オードブル」「筑紫野 手土産」など、目的のある検索の受け皿。
+ */
+export const featurePages = [
+  { href: "/asian", label: "バインミー・アジアンごはん", menuCategory: "asian" },
+  { href: "/order", label: "オードブル・お弁当のご予約", menuCategory: "delica" },
+  { href: "/gift", label: "手土産・ギフト", menuCategory: "sweets" },
+] as const;
+
 /** 未確認情報の共通案内文 */
 export const CONFIRM_ON_INSTAGRAM = "最新情報は公式Instagramをご確認ください。";
 

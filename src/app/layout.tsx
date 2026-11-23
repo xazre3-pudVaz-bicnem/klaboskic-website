@@ -35,8 +35,8 @@ const garamond = EB_Garamond({
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
   title: {
-    default: "K-labo｜筑紫野のカフェ・テイクアウト｜紫駅すぐ",
-    template: "%s｜K-labo｜筑紫野のカフェ・テイクアウト",
+    default: "K-labo（ケイラボ）｜筑紫野・紫駅すぐのカフェ＆テイクアウト",
+    template: "%s｜K-labo（筑紫野・紫駅すぐ）",
   },
   description:
     "筑紫野市・紫駅東口から徒歩約0分のK-labo。バンコクで暮らした9年間を原点に、バインミーやガパオ、黒毛和牛ローストビーフ、西京焼き、彩りバターサンドなどを楽しめるカフェ＆テイクアウトショップです。",
@@ -48,9 +48,13 @@ export const metadata: Metadata = {
     "筑紫野 ローストビーフ",
     "筑紫野 スイーツ",
     "紫駅 テイクアウト",
+    "筑紫野 オードブル",
+    "筑紫野 手土産",
+    "二日市 バインミー",
+    "ケイラボ 筑紫野",
   ],
   openGraph: {
-    title: "K-labo｜筑紫野のカフェ・テイクアウト｜紫駅すぐ",
+    title: "K-labo（ケイラボ）｜筑紫野・紫駅すぐのカフェ＆テイクアウト",
     description:
       "アジアで出会ったおいしさを、日常の一皿へ。バインミー、ガパオ、黒毛和牛ローストビーフ、彩りバターサンドまで。筑紫野市・紫駅東口すぐのカフェ＆テイクアウト。",
     url: "/",
@@ -71,6 +75,10 @@ export const metadata: Metadata = {
   formatDetection: {
     telephone: false,
   },
+  // Google Search Console の所有権確認（HTMLタグ方式）。Vercel の環境変数に値を入れると出力される
+  ...(process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION
+    ? { verification: { google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION } }
+    : {}),
 };
 
 export const viewport: Viewport = {

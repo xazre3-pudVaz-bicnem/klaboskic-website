@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Logo from "@/components/ui/Logo";
 import { InstagramIcon, PhoneIcon } from "@/components/ui/icons";
-import { navigation, siteConfig } from "@/data/siteConfig";
+import { featurePages, navigation, siteConfig } from "@/data/siteConfig";
 
 /** フッター */
 export default function Footer() {
@@ -32,7 +32,7 @@ export default function Footer() {
               Menu
             </p>
             <ul className="mt-4 grid grid-cols-2 gap-x-10 gap-y-1 sm:grid-cols-1">
-              {navigation.map((item) => (
+              {[...navigation, ...featurePages].map((item) => (
                 <li key={item.href}>
                   <Link
                     href={item.href}
